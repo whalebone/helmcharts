@@ -1,0 +1,1 @@
+The installation of whalebone resolver is done.

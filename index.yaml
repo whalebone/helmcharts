@@ -1,14 +1,14 @@
 apiVersion: v1
 entries:
-  test1:
+  wb-resolver:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-12-15T10:15:16.823487285+01:00"
+    created: "2021-12-15T12:06:07.401738015+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
-    digest: a568085ae92e1313b27f7a36983f460d00181b425f97bf80a3faadffa626fb45
-    name: test1
+    digest: c0fc6ba23ee9bf1605612d4d487d1539e381e3870d74054f9d4cf845ae676c54
+    name: wb-resolver
     type: application
     urls:
-    - test1-0.0.1.tgz
+    - wb-resolver-0.0.1.tgz
     version: 0.0.1
-generated: "2021-12-15T10:15:16.822674289+01:00"
+generated: "2021-12-15T12:06:07.400929021+01:00"

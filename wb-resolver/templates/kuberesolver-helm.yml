@@ -1,0 +1,420 @@
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kresconf
+  namespace: {{ .Values.namespace }}
+data:
+  kres.conf: |-
+    -- get the name of the leading resolver process for later use
+    local kres_instance = os.getenv("SUPERVISOR_PROCESS_NAME")
+    -- do not use ipv6 for outgoing recursive queries by default
+    net.ipv6 = false
+    -- load all the knot resolver modules needed
+    modules = { 'workarounds < iterate', 'serve_stale < cache', 'hints > iterate', 'policy', 'stats', 'predict', 'bogus_log', 'http','whalebone' }
+    -- size of the dns cache is calculated during startup as 1/4 of available ram
+    cache.open(os.getenv('KNOT_CACHE_SIZE') * MB, 'lmdb:///var/lib/kres/cache')
+    -- exceptions for some troublesome domains
+    policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('microsoftonline.com')}))
+    policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('windows.net')}))
+    policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('trafficmanager.net')}))
+    -- signal firefox to disable DNS over HTTPS and use this resolver instead
+    policy.add(policy.suffix(policy.DENY, {todname('use-application-dns.net.')}))
+    -- prefill the cache with root zone content and update daily
+    if string.match(kres_instance, 'resolver_00') then
+      modules.load('prefill')
+      prefill.config({  ['.'] = { url = 'https://www.internic.net/domain/root.zone',  interval = 86400 }  })
+    end
+    -- bind wed management interface on localhost for automation purposes
+    --define Whalebone http management endpoints
+    --endpoint: wb-trace
+    local wbmgmt_trace = {'application/json',
+    function (h, stream)
+            -- Get request method and deal with it properly
+            local m = h:get(':method')
+            local path = h:get(':path')
+            local r = string.sub(path, string.find(path, "/", 2) + 1)
+            log('[wbmgmt_query] method %s path %s, %s', m, path, r)
+            if m == 'GET' then
+                    local s = whalebone.query(r)
+                    return s
+            else
+                    return 405, 'Cannot do that'
+            end
+    end}
+    --endpoint: wb-reload-caches
+    local wbmgmt_reload_caches = {'application/json',
+    function (h, stream)
+            -- Get request method and deal with it properly
+            local m = h:get(':method')
+            local path = h:get(':path')
+            if (m == 'GET') then
+                    local s = whalebone.load_newest_lmdbs()
+                    return s
+            else
+                    return 405, 'Cannot do that'
+            end
+    end}
+    -- register the new endpoints on the web management interface
+    my_mgmt_endpoints = http.configs._builtin.webmgmt.endpoints
+    my_mgmt_endpoints['/wb-trace'] = wbmgmt_trace
+    my_mgmt_endpoints['/wb-reload-caches'] = wbmgmt_reload_caches
+    http.config({
+            tls = false,
+            endpoints = my_mgmt_endpoints
+    }, 'webmgmt')
+    -- bind web management interface on localhost for automation purposes
+    pcall(net.listen, '127.0.0.1', 8453, { kind = 'webmgmt' })
+    -- end of defaults, resolver specific configuration follows
+    -- Default DNS bindings
+    for name, iface in pairs(net.interfaces()) do pcall(net.listen, {iface['addr'], 53 }) end
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: resolver
+  name: resolver
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicacount }}
+  selector: 
+    matchLabels:
+      app: resolver
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: resolver
+    spec:
+      containers:
+      # resolver
+      - name: resolver
+        env:
+        - name: LMDB_ROOT
+          value: /var/whalebone/lmdb
+        - name: LOG_CONTENT
+          value: '127.0.0.1'
+          # value: 'logcat.resolver:4000'
+        - name: LOG_THREAT
+          value: '127.0.0.1'
+          # value: 'logcat.resolver'
+        - name: SINKIP
+          value: 159.100.251.155
+        - name: SINKIPV6
+          value: '::1'
+        - name: SINKTTL
+          value: '1'
+        - name: CACHE_SIZE
+          value: '100'
+        image: {{ .Values.resolver.image }}:{{ .Values.resolver.tag }}
+        volumeMounts:
+        - mountPath: "/var/lib/kres/cache"
+          name: cache
+        - mountPath: "/etc/kres/"
+          name: kresconf
+        - mountPath: "/var/whalebone"
+          name: var-whalebone
+        - mountPath: "/var/log/whalebone"
+          name: var-log-whalebone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 1.1Gi
+        stdin: true
+        tty: true
+        ports:
+        - containerPort: 53
+     # kresman     
+      - name: kresman
+        env:
+        - name: CA_CRT_BASE64
+          value: {{ .Values.certificates.ca_crt_base64 }}
+        - name: CLIENT_CRT_BASE64
+          value: {{ .Values.certificates.client_crt_base64 }}
+        - name: CLIENT_KEY_BASE64
+          value: {{ .Values.certificates.client_key_base64 }} 
+        - name: GRPC_ENABLED
+          value: 'true'
+        - name: KRES
+          value: '127.0.0.1'
+        - name: KRES_MAX_PORT
+          value: '8912'
+        - name: KRES_MIN_PORT
+          value: '8880'
+        - name: KRES_UPDATE_INTERVAL_S
+          value: '300'
+        - name: LMDB_MAP_SIZE
+          value: '268435456'
+        - name: LMDB_ROOT
+          value: /var/whalebone/lmdb
+        - name: PARTIAL_CACHE_RATIO
+          value: '0'
+        - name: PRIVATE_API_LISTENER
+          value: http://127.0.0.1:8080/
+        - name: RADIUS_ENABLED
+          value: 'false'
+        - name: RADIUS_PORT
+          value: '0'
+        - name: RESOLVERAPI_CERT_VALIDATION_ENABLED
+          value: 'false'
+        - name:  RESOLVERAPI_UPDATE_INTERVAL_S
+          value: '3600'
+        - name:  RESOLVERAPI_URL
+          value: https://resolverapi.{{ .Values.deployment_id }}.whalebone.io:443/sinkit/rest/protostream/resolvercache
+        - name: RESOLVERAPI_VERSION
+          value: v4
+        - name: SECURITY_TOKEN
+          value: '0987654321'
+        - name: SHARED_FOLDER
+          value: /var/whalebone/data
+        - name: SINKHOLE_ENABLED
+          value: 'false'
+        - name: UDP_LOGGER_PORT
+          value: '0'
+        image: {{ .Values.kresman.image }}:{{ .Values.kresman.tag }}
+        volumeMounts:
+        - mountPath: "/var/whalebone"
+          name: var-whalebone
+        - mountPath: "/var/log/whalebone"
+          name: var-log-whalebone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 1.1Gi
+        stdin: true
+        tty: true
+     
+       # logcat
+      - name: logcat
+        env:
+        - name: FILENAME
+          value: whalebone.log
+        - name: HOST
+          value: '127.0.0.1:4000'
+        - name: PATH_OUT
+          value: /var/log/whalebone/
+        image: {{ .Values.logcat.image }}:{{ .Values.logcat.tag }}
+        volumeMounts:
+        - mountPath: "/var/log/whalebone"
+          name: var-log-whalebone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 150Mi
+          limits:
+            cpu: 200m
+            memory: 300Mi
+        stdin: true
+        tty: true
+        ports:
+        - containerPort: 4000
+     # logcat-content   
+      - name: logcat-content
+        env:
+        - name: FILENAME
+          value: content.log
+        - name: HOST
+          value: '127.0.0.1:4001'
+        - name: PATH_OUT
+          value: /var/log/whalebone/
+        image: {{ .Values.logcat_content.image }}:{{ .Values.logcat_content.tag }}
+        volumeMounts:
+        - mountPath: "/var/log/whalebone"
+          name: var-log-whalebone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 150Mi
+          limits:
+            cpu: 200m
+            memory: 300Mi
+        stdin: true
+        tty: true
+        ports:
+        - containerPort: 4001
+     # logstream   
+      - name: logstream
+        env:
+        - name: CA_CRT_BASE64
+          value: {{ .Values.certificates.ca_crt_base64 }}
+        - name: CLIENT_CRT_BASE64
+          value: {{ .Values.certificates.client_crt_base64 }}
+        - name: CLIENT_KEY_BASE64
+          value: {{ .Values.certificates.client_key_base64 }}
+        - name: LOGSTREAM_HOSTS
+          value: '["logger.dev1.whalebone.io:443"]'
+        image: {{ .Values.logstream.image }}:{{ .Values.logstream.tag }}
+        volumeMounts:
+        - mountPath: "/var/log/whalebone"
+          name: var-log-whalebone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 150Mi
+          limits:
+            cpu: 200m
+            memory: 300Mi
+        stdin: true
+        tty: true
+    # logrotate
+      - name: logrotate
+        env:
+        - name: LOGROTATE_COMPRESSION
+          value: compress
+        - name: LOGROTATE_COPIES
+          value: '5'
+        - name: LOGROTATE_CRONSCHEDULE
+          value: '0 */10 * * * *'
+        - name: LOGROTATE_DELAYCOMPRESS
+          value: 'false'
+        - name: LOGROTATE_SIZE
+          value: '1G'
+        - name: LOGS_DIRECTORIES
+          value: '/var/log/whalebone'
+        image: {{ .Values.logcat.image }}:{{ .Values.logcat.tag }}
+        volumeMounts:
+        - mountPath: "/var/log/whalebone"
+          name: var-log-whalebone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 150Mi
+          limits:
+            cpu: 200m
+            memory: 300Mi
+        stdin: true
+        tty: true
+
+         # passivedns
+      - name: passivedns
+        env:
+        - name: DNS_INTERFACE
+          value: any
+        - name: MAX_MEMORY
+          value: '256'
+        - name: PASSIVEDNS_LOGFILE
+          value: '/var/log/whalebone/passivedns.log'
+        image: {{ .Values.passivedns.image }}:{{ .Values.passivedns.tag }}
+        volumeMounts:
+        - mountPath: "/var/log/whalebone"
+          name: var-log-whalebone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 150Mi
+          limits:
+            cpu: 200m
+            memory: 300Mi
+        stdin: true
+        tty: true
+     
+      # lr-agent
+      - name: lr-agent
+        env:
+        - name: CA_CRT_BASE64
+          value: {{ .Values.certificates.ca_crt_base64 }}
+        - name: CLIENT_CRT_BASE64
+          value: {{ .Values.certificates.client_crt_base64 }}
+        - name: CLIENT_KEY_BASE64
+          value: {{ .Values.certificates.client_key_base64 }}       
+        - name: DNS_LIFETIME
+          value: '3'
+        - name: DNS_TIMEOUT
+          value: '3'
+        - name: PROXY_ADDRESS
+          value: 'wss://agentapi.{{ .Values.deployment_id }}.whalebone.io:443/wsproxy/ws'
+        - name: RESOLVER_TRANSLATION_CHECK_METHOD
+          value: trace
+        - name: UPGRADE_SLEEP
+          value: '30'
+        - name: WEBSOCKET_LOGGING
+          value: '10'
+        image: {{ .Values.lr_agent.image }}:{{ .Values.lr_agent.tag }}
+        volumeMounts:
+        - mountPath: "/etc/whalebone/sysinfo/"
+          name: var-log-whalebone
+        resources:
+          requests:
+            cpu: 40m
+            memory: 150Mi
+          limits:
+            cpu: 200m
+            memory: 300Mi
+        stdin: true
+        tty: true
+      volumes:
+      - name: cache
+        emptyDir:
+          medium: Memory
+          sizeLimit: 1Gi
+      - name: kresconf
+        configMap:
+          name: kresconf
+      - name: var-whalebone
+        emptyDir: {}
+      - name: var-log-whalebone
+        emptyDir: {}
+
+      # imagePullSecrets: 
+      # - name: harbor-pull-cred
+      # affinity:
+      #   nodeAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #     - weight: 1
+      #       preference:
+      #         matchExpressions:
+      #         - key: node-preemtible
+      #           operator: In
+      #           values:
+      #           - "yes"
+      # restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resolver-tcp-external
+  labels:
+    app.kubernetes.io/instance: resolver
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: resolver
+  type: LoadBalancer
+  loadBalancerIP: {{ .Values.resolver_external_ip }} 
+  ports:
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resolver-udp-external
+  labels:
+    app.kubernetes.io/instance: resolver
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: resolver
+  type: LoadBalancer
+  loadBalancerIP: {{ .Values.resolver_external_ip }} 
+  ports:
+    - name: dns-udp
+      port: 53
+      targetPort: 53
+      protocol: UDP
+
+
