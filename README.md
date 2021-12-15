@@ -13,6 +13,13 @@ How to add repo?
   NAME           	CHART VERSION	APP VERSION	DESCRIPTION                                       
 whalebone/test1	0.0.1        	0.0.1      	A test intallation of whalebone resolver in Kub...
 
+How to install a chart:
 
  
-  
+How to package a chart:
+  helm package ./wb-resolver/
+  helm repo index
+
+
+How to remove a repo:
+helm repo remove whalebone
