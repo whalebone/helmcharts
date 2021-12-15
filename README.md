@@ -1,23 +1,18 @@
-# Kubeval
+# Helmchart repo for Whalebone tools
 
-`kubeval` is a tool for validating a Kubernetes YAML or JSON configuration file.
-It does so using schemas generated from the Kubernetes OpenAPI specification, and
-therefore can validate schemas for multiple versions of Kubernetes.
+How to add repo?
+1. Install the lastest vewrsion of HELM (https://helm.sh/)
+2. Obtain Github Personal Access Token
+3. Add repo using following commands:
+  helm repo add --username <username> --password <token> whalebone "https://raw.githubusercontent.com/whalebone/helmcharts/main/"
+4. helm search repo whalebone
 
-[![CircleCI](https://circleci.com/gh/instrumenta/kubeval.svg?style=svg)](https://circleci.com/gh/instrumenta/kubeval)
-[![Go Report
-Card](https://goreportcard.com/badge/github.com/instrumenta/kubeval)](https://goreportcard.com/report/github.com/instrumenta/kubeval)
-[![GoDoc](https://godoc.org/github.com/instrumenta/kubeval?status.svg)](https://godoc.org/github.com/instrumenta/kubeval)
-
-
-```
-$ kubeval my-invalid-rc.yaml
-WARN - fixtures/my-invalid-rc.yaml contains an invalid ReplicationController - spec.replicas: Invalid type. Expected: [integer,null], given: string
-$ echo $?
-1
-```
+  
+  You should see list of charts:
+  
+  NAME           	CHART VERSION	APP VERSION	DESCRIPTION                                       
+whalebone/test1	0.0.1        	0.0.1      	A test intallation of whalebone resolver in Kub...
 
 
-For full usage and installation instructions see [kubeval.com](https://kubeval.com/).
-# helmcharts
-# helmcharts
+ 
+  
