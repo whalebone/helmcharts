@@ -5,7 +5,7 @@ How to add repo?
 2. Obtain Github Personal Access Token
 3. Add repo using following commands:
   helm repo add --username <username> --password <token> whalebone "https://raw.githubusercontent.com/whalebone/helmcharts/main/"
-4. helm search repo whalebone
+4. helm search repo whalebone --versions
 
   
   You should see list of charts:
@@ -18,8 +18,8 @@ How to install a chart:
  
 How to package a chart:
   helm package ./wb-resolver/
-  helm repo index
-
+  helm repo index ./
+Push to Github
 
 How to remove a repo:
 helm repo remove whalebone
