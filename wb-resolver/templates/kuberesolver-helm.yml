@@ -76,23 +76,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: resolver
-  name: resolver
+    app: wb-resolver
+  name: wb-resolver
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicacount }}
   selector: 
     matchLabels:
-      app: resolver
+      app: wb-resolver
   strategy:
-  type: RollingUpdate
-  rollingUpdate:
-    maxSurge: 1
-    maxUnavailable: 25%
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
-        app: resolver
+        app: wb-resolver
     spec:
       containers:
       # resolver
