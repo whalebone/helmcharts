@@ -11,10 +11,13 @@ How to add repo?
   You should see list of charts:
   
   NAME           	CHART VERSION	APP VERSION	DESCRIPTION                                       
-whalebone/test1	0.0.1        	0.0.1      	A test intallation of whalebone resolver in Kub...
+whalebone/wb-resolver	0.0.3        	0.0.1      	A test intallation of whalebone resolver in Kub...
+whalebone/wb-resolver	0.0.2        	0.0.1      	A test intallation of whalebone resolver in Kub...
+whalebone/wb-resolver	0.0.1        	0.0.1      	A test intallation of whalebone resolver in Kub...
+
 
 How to install a chart:
-
+helm install wb-resolver whalebone/wb-resolver -f ~/Github-Whalebone/gcp-sandbox-10/resolver/helm-values-files/dev1.yml
  
 How to package a chart:
   helm package ./wb-resolver/

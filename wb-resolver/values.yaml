@@ -1,6 +1,6 @@
 
 namespace: resolver
-replicacount: 1
+replicacount: 2
 
 resolver:
   image: "harbor.whalebone.io/resolver/kres"

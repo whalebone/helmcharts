@@ -84,7 +84,11 @@ spec:
   selector: 
     matchLabels:
       app: resolver
-  strategy: {}
+  strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 25%
   template:
     metadata:
       labels:
