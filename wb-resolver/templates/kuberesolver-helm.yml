@@ -343,6 +343,8 @@ spec:
           value: '30'
         - name: WEBSOCKET_LOGGING
           value: '10'
+        - name: DEPLOYMENT_TYPE
+          value: 'kubernetes'
         image: {{ .Values.lr_agent.image }}:{{ .Values.lr_agent.tag }}
         volumeMounts:
         - mountPath: "/etc/whalebone/sysinfo/"
