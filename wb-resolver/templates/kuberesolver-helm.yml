@@ -389,13 +389,13 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  name: resolver-tcp-external
+  name: wb-resolver-tcp-external
   labels:
     app.kubernetes.io/instance: resolver
   namespace: {{ .Values.namespace }}
 spec:
   selector:
-    app: resolver
+    app: wb-resolver
   type: LoadBalancer
   loadBalancerIP: {{ .Values.resolver_external_ip }} 
   ports:
@@ -408,13 +408,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: resolver-udp-external
+  name: wb-resolver-udp-external
   labels:
     app.kubernetes.io/instance: resolver
   namespace: {{ .Values.namespace }}
 spec:
   selector:
-    app: resolver
+    app: wb-resolver
   type: LoadBalancer
   loadBalancerIP: {{ .Values.resolver_external_ip }} 
   ports:
