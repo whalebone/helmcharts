@@ -2,8 +2,19 @@ apiVersion: v1
 entries:
   wb-resolver:
   - apiVersion: v2
+    appVersion: 0.0.9
+    created: "2022-01-11T14:03:19.86752292+01:00"
+    description: A test intallation of whalebone resolver in Kubernetes
+    digest: 29135436af5739c3874ee7fda0db5085e419d84c73c366e273948d73995e7fad
+    icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
+    name: wb-resolver
+    type: application
+    urls:
+    - wb-resolver-0.0.11.tgz
+    version: 0.0.11
+  - apiVersion: v2
     appVersion: 0.0.8
-    created: "2022-01-11T14:00:33.129341686+01:00"
+    created: "2022-01-11T14:03:19.867019706+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: cbb84498beea604384fc1e530df2fce18139095d0430e7fba41d6027846029ff
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -14,7 +25,7 @@ entries:
     version: 0.0.10
   - apiVersion: v2
     appVersion: 0.0.7
-    created: "2022-01-11T14:00:33.13775947+01:00"
+    created: "2022-01-11T14:03:19.879237789+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: f9fcc6ee85956aa99ca0d56bfd33487a1873575959c4fb654df57ada40c0f139
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -25,7 +36,7 @@ entries:
     version: 0.0.9
   - apiVersion: v2
     appVersion: 0.0.6
-    created: "2022-01-11T14:00:33.137024551+01:00"
+    created: "2022-01-11T14:03:19.87883965+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: ee466d1701db9d3f22f92412da64534211f6e8e1a50d2a500596c6954209282c
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -36,7 +47,7 @@ entries:
     version: 0.0.8
   - apiVersion: v2
     appVersion: 0.0.5
-    created: "2022-01-11T14:00:33.136066192+01:00"
+    created: "2022-01-11T14:03:19.878458641+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 288ecb4201bf5e3b230639d90896d77c72e9fd4381a8b1f462903d6f9da8af96
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -47,7 +58,7 @@ entries:
     version: 0.0.7
   - apiVersion: v2
     appVersion: 0.0.4
-    created: "2022-01-11T14:00:33.135183715+01:00"
+    created: "2022-01-11T14:03:19.878078417+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: b024ba619b6df6c0a71b9ad1ac83187aae9891da76bc992c5b3001a4b9e2e7cf
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -58,7 +69,7 @@ entries:
     version: 0.0.6
   - apiVersion: v2
     appVersion: 0.0.3
-    created: "2022-01-11T14:00:33.134609132+01:00"
+    created: "2022-01-11T14:03:19.877683929+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 7059dcb78ad6ed44b5ab572e9bcf8f415142ae501d0bea100d823ff0b20a38e0
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -69,7 +80,7 @@ entries:
     version: 0.0.5
   - apiVersion: v2
     appVersion: 0.0.2
-    created: "2022-01-11T14:00:33.134048272+01:00"
+    created: "2022-01-11T14:03:19.876999275+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: d0e853eee69f98f84c1d4b55bbb47fbc15c10270c5df2813143f5f1605631943
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -80,7 +91,7 @@ entries:
     version: 0.0.4
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-01-11T14:00:33.131062737+01:00"
+    created: "2022-01-11T14:03:19.876354135+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 178226f04d44bbc00007ef119eff60aa6478e6496bae4e037481c5093d12222e
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -91,7 +102,7 @@ entries:
     version: 0.0.3
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-01-11T14:00:33.130275044+01:00"
+    created: "2022-01-11T14:03:19.867982398+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 586ff6b86c9af87ed7aa65fd2d0eede7cbdb299a3d98212a286fb02ba245e367
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -102,7 +113,7 @@ entries:
     version: 0.0.2
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-01-11T14:00:33.1289201+01:00"
+    created: "2022-01-11T14:03:19.866548119+01:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: c84915233c8cd986666fe7b48b3c24a6c97fe9edfc6c62f4e63bf4a069abedbd
     name: wb-resolver
@@ -110,4 +121,4 @@ entries:
     urls:
     - wb-resolver-0.0.1.tgz
     version: 0.0.1
-generated: "2022-01-11T14:00:33.120644661+01:00"
+generated: "2022-01-11T14:03:19.865705877+01:00"
