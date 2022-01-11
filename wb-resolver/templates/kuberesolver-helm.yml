@@ -88,7 +88,7 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 25%
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -124,6 +124,10 @@ spec:
           name: var-whalebone
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
+        - mountPath: "/tty/control"
+          name: var-lib-kres-tty
+        - mountPath: "/etc/kres"
+          name: etc-whalebone-kres
         resources:
           requests:
             cpu: 40m
@@ -349,6 +353,10 @@ spec:
         volumeMounts:
         - mountPath: "/etc/whalebone/sysinfo/"
           name: var-log-whalebone
+        - mountPath: "/etc/whalebone/tty/"
+          name: var-lib-kres-tty
+        - mountPath: "/etc/whalebone/etc"
+          name: etc-whalebone
         resources:
           requests:
             cpu: 40m
@@ -370,7 +378,12 @@ spec:
         emptyDir: {}
       - name: var-log-whalebone
         emptyDir: {}
-
+      - name: var-lib-kres-tty
+        emptyDir: {}
+      - name: etc-whalebone
+        emptyDir: {}
+      - name: etc-whalebone-kres
+        emptyDir: {}
       # imagePullSecrets: 
       # - name: harbor-pull-cred
       # affinity:
