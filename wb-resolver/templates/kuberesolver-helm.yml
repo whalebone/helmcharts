@@ -325,7 +325,31 @@ spec:
             memory: 300Mi
         stdin: true
         tty: true
-     
+ 
+      # consumer
+      - name: consumer
+        env:
+        - name: CA_CRT_BASE64
+          value: {{ .Values.certificates.ca_crt_base64 }}
+        - name: CLIENT_CRT_BASE64
+          value: {{ .Values.certificates.client_crt_base64 }}
+        - name: CLIENT_KEY_BASE64
+          value: {{ .Values.certificates.client_key_base64 }}       
+        - name: KAFKA_BROKER
+          value: 'xxxxx'
+        - name: LOGGING_LEVEL
+          value: 'INFO'
+        image: {{ .Values.consumer.image }}:{{ .Values.consumer.tag }}
+        resources:
+          requests:
+            cpu: 40m
+            memory: 150Mi
+          limits:
+            cpu: 200m
+            memory: 300Mi
+        stdin: true
+        tty: true
+
       # lr-agent
       - name: lr-agent
         env:

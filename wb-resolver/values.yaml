@@ -1,6 +1,6 @@
 
 namespace: resolver
-replicacount: 1replicacpunt=1
+replicacount: 2
 
 resolver:
   image: "harbor.whalebone.io/resolver/kres"
@@ -33,6 +33,11 @@ passivedns:
 lr_agent:
   image: "harbor.whalebone.io/resolver/agent"
   tag: "1.5.6"
+
+consumer:
+  image: "harbor.whalebone.io/resolver/consumer"
+  tag: "1.0.3"
+
 
 # # Default values for test1.
 # # This is a YAML-formatted file.
