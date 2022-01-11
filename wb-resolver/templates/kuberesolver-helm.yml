@@ -126,8 +126,8 @@ spec:
           name: var-log-whalebone
         - mountPath: "/tty/control"
           name: var-lib-kres-tty
-        - mountPath: "/etc/kres"
-          name: etc-whalebone-kres
+        # - mountPath: "/etc/kres"
+        #   name: etc-whalebone-kres
         resources:
           requests:
             cpu: 40m
@@ -382,8 +382,8 @@ spec:
         emptyDir: {}
       - name: etc-whalebone
         emptyDir: {}
-      - name: etc-whalebone-kres
-        emptyDir: {}
+      # - name: etc-whalebone-kres
+      #   emptyDir: {}
       # imagePullSecrets: 
       # - name: harbor-pull-cred
       # affinity:
