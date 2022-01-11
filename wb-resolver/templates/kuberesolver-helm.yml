@@ -1,74 +1,74 @@
 
----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: kresconf
-  namespace: {{ .Values.namespace }}
-data:
-  kres.conf: |-
-    -- get the name of the leading resolver process for later use
-    local kres_instance = os.getenv("SUPERVISOR_PROCESS_NAME")
-    -- do not use ipv6 for outgoing recursive queries by default
-    net.ipv6 = false
-    -- load all the knot resolver modules needed
-    modules = { 'workarounds < iterate', 'serve_stale < cache', 'hints > iterate', 'policy', 'stats', 'predict', 'bogus_log', 'http','whalebone' }
-    -- size of the dns cache is calculated during startup as 1/4 of available ram
-    cache.open(os.getenv('KNOT_CACHE_SIZE') * MB, 'lmdb:///var/lib/kres/cache')
-    -- exceptions for some troublesome domains
-    policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('microsoftonline.com')}))
-    policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('windows.net')}))
-    policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('trafficmanager.net')}))
-    -- signal firefox to disable DNS over HTTPS and use this resolver instead
-    policy.add(policy.suffix(policy.DENY, {todname('use-application-dns.net.')}))
-    -- prefill the cache with root zone content and update daily
-    if string.match(kres_instance, 'resolver_00') then
-      modules.load('prefill')
-      prefill.config({  ['.'] = { url = 'https://www.internic.net/domain/root.zone',  interval = 86400 }  })
-    end
-    -- bind wed management interface on localhost for automation purposes
-    --define Whalebone http management endpoints
-    --endpoint: wb-trace
-    local wbmgmt_trace = {'application/json',
-    function (h, stream)
-            -- Get request method and deal with it properly
-            local m = h:get(':method')
-            local path = h:get(':path')
-            local r = string.sub(path, string.find(path, "/", 2) + 1)
-            log('[wbmgmt_query] method %s path %s, %s', m, path, r)
-            if m == 'GET' then
-                    local s = whalebone.query(r)
-                    return s
-            else
-                    return 405, 'Cannot do that'
-            end
-    end}
-    --endpoint: wb-reload-caches
-    local wbmgmt_reload_caches = {'application/json',
-    function (h, stream)
-            -- Get request method and deal with it properly
-            local m = h:get(':method')
-            local path = h:get(':path')
-            if (m == 'GET') then
-                    local s = whalebone.load_newest_lmdbs()
-                    return s
-            else
-                    return 405, 'Cannot do that'
-            end
-    end}
-    -- register the new endpoints on the web management interface
-    my_mgmt_endpoints = http.configs._builtin.webmgmt.endpoints
-    my_mgmt_endpoints['/wb-trace'] = wbmgmt_trace
-    my_mgmt_endpoints['/wb-reload-caches'] = wbmgmt_reload_caches
-    http.config({
-            tls = false,
-            endpoints = my_mgmt_endpoints
-    }, 'webmgmt')
-    -- bind web management interface on localhost for automation purposes
-    pcall(net.listen, '127.0.0.1', 8453, { kind = 'webmgmt' })
-    -- end of defaults, resolver specific configuration follows
-    -- Default DNS bindings
-    for name, iface in pairs(net.interfaces()) do pcall(net.listen, {iface['addr'], 53 }) end
+# ---
+# kind: ConfigMap
+# apiVersion: v1
+# metadata:
+#   name: kresconf
+#   namespace: {{ .Values.namespace }}
+# data:
+#   kres.conf: |-
+#     -- get the name of the leading resolver process for later use
+#     local kres_instance = os.getenv("SUPERVISOR_PROCESS_NAME")
+#     -- do not use ipv6 for outgoing recursive queries by default
+#     net.ipv6 = false
+#     -- load all the knot resolver modules needed
+#     modules = { 'workarounds < iterate', 'serve_stale < cache', 'hints > iterate', 'policy', 'stats', 'predict', 'bogus_log', 'http','whalebone' }
+#     -- size of the dns cache is calculated during startup as 1/4 of available ram
+#     cache.open(os.getenv('KNOT_CACHE_SIZE') * MB, 'lmdb:///var/lib/kres/cache')
+#     -- exceptions for some troublesome domains
+#     policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('microsoftonline.com')}))
+#     policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('windows.net')}))
+#     policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}), {todname('trafficmanager.net')}))
+#     -- signal firefox to disable DNS over HTTPS and use this resolver instead
+#     policy.add(policy.suffix(policy.DENY, {todname('use-application-dns.net.')}))
+#     -- prefill the cache with root zone content and update daily
+#     if string.match(kres_instance, 'resolver_00') then
+#       modules.load('prefill')
+#       prefill.config({  ['.'] = { url = 'https://www.internic.net/domain/root.zone',  interval = 86400 }  })
+#     end
+#     -- bind wed management interface on localhost for automation purposes
+#     --define Whalebone http management endpoints
+#     --endpoint: wb-trace
+#     local wbmgmt_trace = {'application/json',
+#     function (h, stream)
+#             -- Get request method and deal with it properly
+#             local m = h:get(':method')
+#             local path = h:get(':path')
+#             local r = string.sub(path, string.find(path, "/", 2) + 1)
+#             log('[wbmgmt_query] method %s path %s, %s', m, path, r)
+#             if m == 'GET' then
+#                     local s = whalebone.query(r)
+#                     return s
+#             else
+#                     return 405, 'Cannot do that'
+#             end
+#     end}
+#     --endpoint: wb-reload-caches
+#     local wbmgmt_reload_caches = {'application/json',
+#     function (h, stream)
+#             -- Get request method and deal with it properly
+#             local m = h:get(':method')
+#             local path = h:get(':path')
+#             if (m == 'GET') then
+#                     local s = whalebone.load_newest_lmdbs()
+#                     return s
+#             else
+#                     return 405, 'Cannot do that'
+#             end
+#     end}
+#     -- register the new endpoints on the web management interface
+#     my_mgmt_endpoints = http.configs._builtin.webmgmt.endpoints
+#     my_mgmt_endpoints['/wb-trace'] = wbmgmt_trace
+#     my_mgmt_endpoints['/wb-reload-caches'] = wbmgmt_reload_caches
+#     http.config({
+#             tls = false,
+#             endpoints = my_mgmt_endpoints
+#     }, 'webmgmt')
+#     -- bind web management interface on localhost for automation purposes
+#     pcall(net.listen, '127.0.0.1', 8453, { kind = 'webmgmt' })
+#     -- end of defaults, resolver specific configuration follows
+#     -- Default DNS bindings
+#     for name, iface in pairs(net.interfaces()) do pcall(net.listen, {iface['addr'], 53 }) end
 
 
 ---
@@ -396,8 +396,9 @@ spec:
           medium: Memory
           sizeLimit: 1Gi
       - name: kresconf
-        configMap:
-          name: kresconf
+        emptydir: {}
+        # configMap:
+        #   name: kresconf
       - name: var-whalebone
         emptyDir: {}
       - name: var-log-whalebone
