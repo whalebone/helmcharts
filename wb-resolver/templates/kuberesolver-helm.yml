@@ -7,7 +7,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 data:
   kres.conf: |-
-    {{ .Values.kresconf }}
+{{ .Files.Get "kres.conf" | indent 4 }}
    
    
   # -- get the name of the leading resolver process for later use
