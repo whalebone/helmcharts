@@ -396,7 +396,7 @@ spec:
           medium: Memory
           sizeLimit: 1Gi
       - name: kresconf
-        emptydir: {}
+        emptyDir: {}
         # configMap:
         #   name: kresconf
       - name: var-whalebone
