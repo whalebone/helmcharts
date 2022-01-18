@@ -339,7 +339,7 @@ spec:
         - name: CLIENT_KEY_BASE64
           value: {{ .Values.certificates.client_key_base64 }}       
         - name: KAFKA_BROKER
-          value: 'xxxxx'
+          value: stream.{{ .Values.deployment_id }}.whalebone.io
         - name: LOGGING_LEVEL
           value: 'INFO'
         image: {{ .Values.consumer.image }}:{{ .Values.consumer.tag }}
