@@ -2,8 +2,19 @@ apiVersion: v1
 entries:
   wb-resolver:
   - apiVersion: v2
+    appVersion: 0.0.16
+    created: "2022-04-21T14:15:41.515891826+02:00"
+    description: A test intallation of whalebone resolver in Kubernetes
+    digest: 86d81a84846548c31063e6bf4444898f10f1f726f27d191c1e9b7f65dda5adb8
+    icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
+    name: wb-resolver
+    type: application
+    urls:
+    - wb-resolver-0.0.18.tgz
+    version: 0.0.18
+  - apiVersion: v2
     appVersion: 0.0.15
-    created: "2022-01-18T14:43:29.005592712+01:00"
+    created: "2022-04-21T14:15:41.515522611+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: b7fd74d9ac4b02d06df73f898d20f84cb6b6cb464cdd581577e3af440cae2fce
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -14,7 +25,7 @@ entries:
     version: 0.0.17
   - apiVersion: v2
     appVersion: 0.0.14
-    created: "2022-01-18T14:43:29.005160303+01:00"
+    created: "2022-04-21T14:15:41.515136856+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 495e60b4effd936be9a9c1fb81b2dea7b4d4b9791ba8f108107b63d213436a4f
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -25,7 +36,7 @@ entries:
     version: 0.0.16
   - apiVersion: v2
     appVersion: 0.0.13
-    created: "2022-01-18T14:43:29.004021959+01:00"
+    created: "2022-04-21T14:15:41.514719779+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: dc2c199e6459e88c8f03c48085641af7f4d439bd29b51d30ba90e21708275f97
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -36,7 +47,7 @@ entries:
     version: 0.0.15
   - apiVersion: v2
     appVersion: 0.0.12
-    created: "2022-01-18T14:43:29.003414004+01:00"
+    created: "2022-04-21T14:15:41.513674771+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: e05909adcd17d425cbeb915dbb67a1278c4c6ba9c20e6a31842265ddb89e5ea7
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -47,7 +58,7 @@ entries:
     version: 0.0.14
   - apiVersion: v2
     appVersion: 0.0.11
-    created: "2022-01-18T14:43:29.002841572+01:00"
+    created: "2022-04-21T14:15:41.51322258+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 8d99f9a7be12dd1f22042d3c925cbb8f10f4fb2c55952f00fe4881db1d4e2e14
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -58,7 +69,7 @@ entries:
     version: 0.0.13
   - apiVersion: v2
     appVersion: 0.0.10
-    created: "2022-01-18T14:43:29.002247107+01:00"
+    created: "2022-04-21T14:15:41.512795173+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 85e5a8db29c3005a4404444f6a2125bff8c8073f86ddd1ee188eeeb0c74c9d3f
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -69,7 +80,7 @@ entries:
     version: 0.0.12
   - apiVersion: v2
     appVersion: 0.0.9
-    created: "2022-01-18T14:43:29.001638856+01:00"
+    created: "2022-04-21T14:15:41.51234066+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 1ab9d89fd9d8c7fa6563aad85c9276ee56eedba68fe425903e6577a6f3027c41
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -80,7 +91,7 @@ entries:
     version: 0.0.11
   - apiVersion: v2
     appVersion: 0.0.8
-    created: "2022-01-18T14:43:29.00105103+01:00"
+    created: "2022-04-21T14:15:41.511912458+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: cbb84498beea604384fc1e530df2fce18139095d0430e7fba41d6027846029ff
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -91,7 +102,7 @@ entries:
     version: 0.0.10
   - apiVersion: v2
     appVersion: 0.0.7
-    created: "2022-01-18T14:43:29.009977977+01:00"
+    created: "2022-04-21T14:15:41.518917114+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: f9fcc6ee85956aa99ca0d56bfd33487a1873575959c4fb654df57ada40c0f139
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -102,7 +113,7 @@ entries:
     version: 0.0.9
   - apiVersion: v2
     appVersion: 0.0.6
-    created: "2022-01-18T14:43:29.009419954+01:00"
+    created: "2022-04-21T14:15:41.518535773+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: ee466d1701db9d3f22f92412da64534211f6e8e1a50d2a500596c6954209282c
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -113,7 +124,7 @@ entries:
     version: 0.0.8
   - apiVersion: v2
     appVersion: 0.0.5
-    created: "2022-01-18T14:43:29.008870651+01:00"
+    created: "2022-04-21T14:15:41.518124276+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 288ecb4201bf5e3b230639d90896d77c72e9fd4381a8b1f462903d6f9da8af96
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -124,7 +135,7 @@ entries:
     version: 0.0.7
   - apiVersion: v2
     appVersion: 0.0.4
-    created: "2022-01-18T14:43:29.008305936+01:00"
+    created: "2022-04-21T14:15:41.517748236+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: b024ba619b6df6c0a71b9ad1ac83187aae9891da76bc992c5b3001a4b9e2e7cf
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -135,7 +146,7 @@ entries:
     version: 0.0.6
   - apiVersion: v2
     appVersion: 0.0.3
-    created: "2022-01-18T14:43:29.007763567+01:00"
+    created: "2022-04-21T14:15:41.517352074+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 7059dcb78ad6ed44b5ab572e9bcf8f415142ae501d0bea100d823ff0b20a38e0
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -146,7 +157,7 @@ entries:
     version: 0.0.5
   - apiVersion: v2
     appVersion: 0.0.2
-    created: "2022-01-18T14:43:29.007241115+01:00"
+    created: "2022-04-21T14:15:41.516987515+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: d0e853eee69f98f84c1d4b55bbb47fbc15c10270c5df2813143f5f1605631943
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -157,7 +168,7 @@ entries:
     version: 0.0.4
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-01-18T14:43:29.006669836+01:00"
+    created: "2022-04-21T14:15:41.516627377+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 178226f04d44bbc00007ef119eff60aa6478e6496bae4e037481c5093d12222e
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -168,7 +179,7 @@ entries:
     version: 0.0.3
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-01-18T14:43:29.006137725+01:00"
+    created: "2022-04-21T14:15:41.516253095+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 586ff6b86c9af87ed7aa65fd2d0eede7cbdb299a3d98212a286fb02ba245e367
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -179,7 +190,7 @@ entries:
     version: 0.0.2
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-01-18T14:43:29.000467535+01:00"
+    created: "2022-04-21T14:15:41.511467166+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: c84915233c8cd986666fe7b48b3c24a6c97fe9edfc6c62f4e63bf4a069abedbd
     name: wb-resolver
@@ -187,4 +198,4 @@ entries:
     urls:
     - wb-resolver-0.0.1.tgz
     version: 0.0.1
-generated: "2022-01-18T14:43:28.992119397+01:00"
+generated: "2022-04-21T14:15:41.510661608+02:00"
