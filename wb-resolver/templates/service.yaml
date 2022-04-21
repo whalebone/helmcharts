@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wb-resolver-tcp-external
+  labels:
+    app.kubernetes.io/instance: resolver
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: wb-resolver
+  type: LoadBalancer
+  loadBalancerIP: {{ .Values.resolver_external_ip }} 
+  ports:
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wb-resolver-udp-external
+  labels:
+    app.kubernetes.io/instance: resolver
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: wb-resolver
+  type: LoadBalancer
+  loadBalancerIP: {{ .Values.resolver_external_ip }} 
+  ports:
+    - name: dns-udp
+      port: 53
+      targetPort: 53
+      protocol: UDP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: wb-resolver-nodeport
+  namespace: {{ .Values.namespace }}
+  name: wb-resolver-nodeport
+spec:
+  type: NodePort
+  ports:
+  - name: tcp-port
+    port: 53
+    targetPort: 53
+    protocol: TCP
+  - name: udp-port
+    port: 53
+    targetPort: 53
+    protocol: UDP
+  selector:
+    app: wb-resolver
