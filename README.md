@@ -26,3 +26,10 @@ Push to Github
 
 How to remove a repo:
 helm repo remove whalebone
+
+
+# Help for customers
+
+1. Prereq: Install HELM (https://helm.sh/). Supported versions are  v3.x.x.
+2. Add whalebone HELM repo: helm repo add whalebone "https://raw.githubusercontent.com/whalebone/helmcharts/main/"
+3. Optional: Get versions in repo:   helm search repo whalebone --versions

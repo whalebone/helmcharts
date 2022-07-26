@@ -4,15 +4,15 @@ replicacount: 2
 
 resolver:
   image: "harbor.whalebone.io/resolver/kres"
-  tag: "5.5.0-4-201"
+  tag: "5.5.0-4-203"
 
 logstream:
   image: "harbor.whalebone.io/resolver/logstream"
-  tag: "7.13.2"
+  tag: "7.13.2-1"
 
 kresman:
   image: "harbor.whalebone.io/resolver/kresman"
-  tag: "4.2.4"
+  tag: "4.2.5"
 
 logcat:
   image: "harbor.whalebone.io/resolver/logcat"
@@ -27,8 +27,8 @@ logrotate:
   tag: "1.2"
 
 dnstag:
-  image: "harbor.whalebone.io/resolver/dnstag"
-  tag: "1.6.4"
+  image: "harbor.whalebone.io/resolver/passivedns"
+  tag: "1.1.3"
 
 lr_agent:
   image: "harbor.whalebone.io/resolver/agent"
@@ -36,7 +36,7 @@ lr_agent:
 
 consumer:
   image: "harbor.whalebone.io/resolver/consumer"
-  tag: "1.0.5"
+  tag: "1.0.6"
 
 
 # # Default values for test1.
