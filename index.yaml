@@ -3,9 +3,9 @@ entries:
   wb-resolver:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-07-26T09:40:15.573610746+02:00"
+    created: "2022-07-26T09:41:56.363427843+02:00"
     description: A (beta) intallation of whalebone DNS resolver in Kubernetes
-    digest: 372bcef73780aaa45997be90405e4eff6dbb8656b15b809604a81e8a20e286b0
+    digest: 684f113cbb921c9357d985de15a38b7f66d42f73255721e2bd1a12ca0b7e8fac
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
     name: wb-resolver
     type: application
@@ -14,7 +14,7 @@ entries:
     version: 0.1.0
   - apiVersion: v2
     appVersion: 0.0.19
-    created: "2022-07-26T09:40:15.572919+02:00"
+    created: "2022-07-26T09:41:56.362709802+02:00"
     description: A test intallation of whalebone resolver in Kubernetes
     digest: 13ac81f2ac8a1e4bc2fd55523dcc15eee639a79fe03334c9d49138e743d9de51
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -23,4 +23,4 @@ entries:
     urls:
     - wb-resolver-0.0.19.tgz
     version: 0.0.19
-generated: "2022-07-26T09:40:15.572073999+02:00"
+generated: "2022-07-26T09:41:56.361792952+02:00"
