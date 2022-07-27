@@ -1,4 +1,4 @@
-# How to install Whalebone resolver in Kubernetes
+# How to install Whalebone resolver in Kubernetes using HELM
 
 1. Prereq: Install HELM v3 (https://helm.sh/).
 2. Prereq: Create NameSpace for whalebone resolver ```kubectl create ns <your_namespace> ```
