@@ -1,6 +1,6 @@
 apiVersion: v2
 name: wb-resolver
-description: A (beta) intallation of whalebone DNS resolver in Kubernetes
+description: A intallation of whalebone DNS resolver in Kubernetes
 icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
 # A chart can be either an 'application' or a 'library' chart.
 #
