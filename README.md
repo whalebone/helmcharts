@@ -30,7 +30,7 @@ helm repo remove whalebone
 
 # Help for customers
 
-1. Prereq: Install HELM (https://helm.sh/). Supported versions are  v3.x.x.
+1. Prereq: Install HELM v3 (https://helm.sh/). 
 2. Add whalebone HELM repo: helm repo add whalebone "https://raw.githubusercontent.com/whalebone/helmcharts/main/"
 3. Optional: Get versions in repo:   helm search repo whalebone --versions
 4. Installation  helm install wb-resolver whalebone/wb-resolver -f ./resolver_30_params.yaml -f ./resolver_30_secrets.yml --set namespace=<your_namespace>

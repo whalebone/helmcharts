@@ -197,7 +197,7 @@ spec:
           name: var-whalebone-db
         - mountPath: "/var/whalebone/lmdb"
           name: var-whalebone-lmdb
-        command: ['/go/bin/cmd', '-b', '-u=/var/whalebone/dnstap/dnstap.sock', '-w', '/var/log/whalebone/passivedns.log']
+        # command: ['/go/bin/cmd', '-b', '-u=/var/whalebone/dnstap/dnstap.sock', '-w', '/var/log/whalebone/passivedns.log']
 
 
  
