@@ -1,20 +1,11 @@
 
-How to install a chart:
-helm install wb-resolver whalebone/wb-resolver -f ~/Github-Whalebone/gcp-sandbox-10/resolver/helm-values-files/dev1.yml
- 
-How to package a chart:
-  helm package ./wb-resolver/
-  helm repo index ./
-Push to Github
 
-How to remove a repo:
-helm repo remove whalebone
 
 
 # Help for customers
 
 1. Prereq: Install HELM v3 (https://helm.sh/).
-2. Prereq: Create NameSpace for whalebone resolver kubectl create ns <your_namespace> 
+2. Prereq: Create NameSpace for whalebone resolver ```kubectl create ns <your_namespace> ```
 3. Add whalebone HELM repo: helm repo add whalebone "https://raw.githubusercontent.com/whalebone/helmcharts/main/"
 4. Optional: helm repo update
 5. Optional: Get versions in whalebone repo: helm search repo whalebone --versions
@@ -25,7 +16,7 @@ helm repo remove whalebone
 2. Check components: kubectl get all -n <your_namespace>
 
 You should see similar output:
-
+```
 NAME                               READY   STATUS    RESTARTS   AGE
 pod/wb-resolver-5f5649c967-bq526   9/9     Running   0          78m
 pod/wb-resolver-5f5649c967-chxbd   9/9     Running   0          78m
@@ -38,9 +29,9 @@ deployment.apps/wb-resolver   2/2     2            2           78m
 
 NAME                                     DESIRED   CURRENT   READY   AGE
 replicaset.apps/wb-resolver-5f5649c967   2         2         2       78m
-
+```
 # Next steps
-The installation does NOT expose the resolver to the internet. This step is on the customer side. below are examples of service, which will expose the resolver to the internet and assign external IP adress
+The helm installation does NOT expose the resolver to the internet. This step is on the customer side. Below are examples of service, which will expose the resolver to the internet and assign external IP adress
 
 ```
 apiVersion: v1
