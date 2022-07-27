@@ -6,14 +6,14 @@
 
 1. Prereq: Install HELM v3 (https://helm.sh/).
 2. Prereq: Create NameSpace for whalebone resolver ```kubectl create ns <your_namespace> ```
-3. Add whalebone HELM repo: helm repo add whalebone "https://raw.githubusercontent.com/whalebone/helmcharts/main/"
-4. Optional: helm repo update
-5. Optional: Get versions in whalebone repo: helm search repo whalebone --versions
-6. Installation  helm install wb-resolver whalebone/wb-resolver -f ./<resolver_params_filr>.yaml -f ./<resolver_secrets_file.yml> --set namespace=<your_namespace> -n <your_namespace>
+3. Add whalebone HELM repo: ```helm repo add whalebone "https://raw.githubusercontent.com/whalebone/helmcharts/main/"```
+4. Optional: ```helm repo update```
+5. Optional: Get versions in whalebone repo: ```helm search repo whalebone --versions```
+6. Installation  ```helm install wb-resolver whalebone/wb-resolver -f ./<resolver_params_filr>.yaml -f ./<resolver_secrets_file.yml> --set namespace=<your_namespace> -n <your_namespace>```
 
 # How to check installation.
-1. Check helm:  helm list -n <your_namespace>
-2. Check components: kubectl get all -n <your_namespace>
+1. Check helm:  ```helm list -n <your_namespace>```
+2. Check components: ```kubectl get all -n <your_namespace>```
 
 You should see similar output:
 ```
@@ -72,7 +72,8 @@ spec:
       protocol: UDP 
 ```
 
-
+# Uninstall
+To uninstall resolver please run: ```helm uninstall wb-resolver -n <your_namespace>```
 
 
 
