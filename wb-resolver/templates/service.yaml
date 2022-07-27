@@ -36,24 +36,24 @@
 #       targetPort: 53
 #       protocol: UDP
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: wb-resolver-nodeport
-  namespace: {{ .Values.namespace }}
-  name: wb-resolver-nodeport
-spec:
-  type: NodePort
-  ports:
-  - name: tcp-port
-    port: 53
-    targetPort: 53
-    protocol: TCP
-  - name: udp-port
-    port: 53
-    targetPort: 53
-    protocol: UDP
-  selector:
-    app: wb-resolver
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: wb-resolver-nodeport
+#   namespace: {{ .Values.namespace }}
+#   name: wb-resolver-nodeport
+# spec:
+#   type: NodePort
+#   ports:
+#   - name: tcp-port
+#     port: 53
+#     targetPort: 53
+#     protocol: TCP
+#   - name: udp-port
+#     port: 53
+#     targetPort: 53
+#     protocol: UDP
+#   selector:
+#     app: wb-resolver
