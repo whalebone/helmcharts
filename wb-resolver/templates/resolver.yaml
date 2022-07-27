@@ -92,7 +92,7 @@ spec:
         - name:  RESOLVERAPI_UPDATE_INTERVAL_S
           value: '3600'
         - name:  RESOLVERAPI_URL
-          value: https://resolverapi.{{ .Values.deployment_id }}.whalebone.io:443/sinkit/rest/protostream/resolvercache
+          value: https://resolverapi.{{ .Values.deployment_id }}whalebone.io:443/sinkit/rest/protostream/resolvercache
         - name: RESOLVERAPI_VERSION
           value: v4
         - name: SECURITY_TOKEN
@@ -150,7 +150,7 @@ spec:
         - name: CLIENT_KEY_BASE64
           value: {{ .Values.certificates.client_key_base64 }}
         - name: LOGSTREAM_HOSTS
-          value: '["logger.dev1.whalebone.io:443"]'
+          value: '["logger.{{ .Values.deployment_id }}whalebone.io:443"]'
         image: {{ .Values.logstream.image }}:{{ .Values.logstream.tag }}
         volumeMounts:
         - mountPath: "/var/log/whalebone"
@@ -211,7 +211,7 @@ spec:
         - name: CLIENT_KEY_BASE64
           value: {{ .Values.certificates.client_key_base64 }}       
         - name: KAFKA_BROKER
-          value: stream.{{ .Values.deployment_id }}.whalebone.io
+          value: stream.{{ .Values.deployment_id }}whalebone.io
         - name: LOGGING_LEVEL
           value: 'INFO'
         image: {{ .Values.consumer.image }}:{{ .Values.consumer.tag }}
@@ -230,7 +230,7 @@ spec:
         - name: DNS_TIMEOUT
           value: '3'
         - name: PROXY_ADDRESS
-          value: 'wss://agentapi.{{ .Values.deployment_id }}.whalebone.io:443/wsproxy/ws'
+          value: 'wss://agentapi.{{ .Values.deployment_id }}whalebone.io:443/wsproxy/ws'
         - name: RESOLVER_TRANSLATION_CHECK_METHOD
           value: trace
         - name: UPGRADE_SLEEP
