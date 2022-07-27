@@ -42,43 +42,43 @@ replicaset.apps/wb-resolver-5f5649c967   2         2         2       78m
 # Next steps
 The installation does NOT expose the resolver to the internet. This step is on the customer side. below are examples of service, which will expose the resolver to the internet and assign external IP adress
 
-<!-- # ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: wb-resolver-tcp-external
-#   labels:
-#     app.kubernetes.io/instance: resolver
-#   namespace: <your_namespace> 
-# spec:
-#   selector:
-#     app: wb-resolver
-#   type: LoadBalancer
-#   loadBalancerIP: <external_IP>
-#   ports:
-#     - name: dns-tcp
-#       port: 53
-#       protocol: TCP
-#       targetPort: 53
 
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: wb-resolver-udp-external
-#   labels:
-#     app.kubernetes.io/instance: resolver
-#   namespace: <your_namespace> 
-# spec:
-#   selector:
-#     app: wb-resolver
-#   type: LoadBalancer
-#   loadBalancerIP: <external_IP>
-#   ports:
-#     - name: dns-udp
-#       port: 53
-#       targetPort: 53
-#       protocol: UDP -->
+ apiVersion: v1
+ kind: Service
+ metadata:
+   name: wb-resolver-tcp-external
+   labels:
+     app.kubernetes.io/instance: resolver
+   namespace: <your_namespace> 
+ spec:
+   selector:
+     app: wb-resolver
+   type: LoadBalancer
+   loadBalancerIP: <external_IP>
+   ports:
+     - name: dns-tcp
+       port: 53
+       protocol: TCP
+       targetPort: 53
+
+---
+> apiVersion: v1
+> kind: Service
+> metadata:
+   name: wb-resolver-udp-external
+   labels:
+     app.kubernetes.io/instance: resolver
+   namespace: <your_namespace> 
+ spec:
+   selector:
+     app: wb-resolver
+   type: LoadBalancer
+   loadBalancerIP: <external_IP>
+   ports:
+     - name: dns-udp
+       port: 53
+       targetPort: 53
+       protocol: UDP -->
 
 
 
