@@ -1,8 +1,4 @@
-
-
-
-
-# Help for customers
+# How to install Whalebone resolver in Kubernetes
 
 1. Prereq: Install HELM v3 (https://helm.sh/).
 2. Prereq: Create NameSpace for whalebone resolver ```kubectl create ns <your_namespace> ```
@@ -10,7 +6,7 @@
 4. Optional: ```helm repo update```
 5. Optional: Get versions in whalebone repo: ```helm search repo whalebone --versions```
 6. Installation  ```helm install wb-resolver whalebone/wb-resolver -f ./<resolver_params_filr>.yaml -f ./<resolver_secrets_file.yml> --set namespace=<your_namespace> -n <your_namespace>```
-
+Note: Files ```resolver_params_filr>.yaml``` and  ```<resolver_secrets_file.yml>``` in portal when you add k8s resolver
 # How to check installation.
 1. Check helm:  ```helm list -n <your_namespace>```
 2. Check components: ```kubectl get all -n <your_namespace>```
