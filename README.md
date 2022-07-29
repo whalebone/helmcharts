@@ -5,8 +5,8 @@
 3. Add whalebone HELM repo: ```helm repo add whalebone "https://raw.githubusercontent.com/whalebone/helmcharts/main/"```
 4. Optional: ```helm repo update```
 5. Optional: Get versions in whalebone repo: ```helm search repo whalebone --versions```
-6. Installation  ```helm install wb-resolver whalebone/wb-resolver -f ./<resolver_params_filr>.yaml -f ./<resolver_secrets_file.yml> --set namespace=<your_namespace> -n <your_namespace>```
-Note: Files ```resolver_params_filr>.yaml``` and  ```<resolver_secrets_file.yml>``` in portal when you add k8s resolver
+6. Installation  ```helm install wb-resolver whalebone/wb-resolver -f ./<resolver_params_file>.yaml -f ./<resolver_secrets_file.yaml> --set namespace=<your_namespace> -n <your_namespace>```
+Note: Files ```resolver_params_file>.yaml``` and  ```<resolver_secrets_file.yaml>``` in portal when you add k8s resolver
 # How to check installation.
 1. Check helm:  ```helm list -n <your_namespace>```
 2. Check components: ```kubectl get all -n <your_namespace>```
@@ -27,7 +27,7 @@ NAME                                     DESIRED   CURRENT   READY   AGE
 replicaset.apps/wb-resolver-5f5649c967   2         2         2       78m
 ```
 # Next steps
-The helm installation does NOT expose the resolver to the internet. This step is on the customer side. Below are examples of service, which will expose the resolver to the internet and assign external IP adress
+The helm installation does NOT expose the resolver to the internet. This step is on the customer side. Below are examples of services (both must be applied), which will expose the resolver to the internet and assign external IP adress
 
 ```
 apiVersion: v1
