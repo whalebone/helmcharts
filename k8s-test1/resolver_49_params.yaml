@@ -1,0 +1,105 @@
+certificates:
+  ca_crt_base64: >-
+    LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVCekNDQXUrZ0F3SUJBZ0lVUCtJKzF1SUpsVFd1OGtGV09hdVFaQlVLMXdRd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2daSXhDekFKQmdOVkJBWVRBa05hTVJjd0ZRWURWUVFJREE1RGVtVmphQ0JTWlhCMVlteHBZekVYTUJVRwpBMVVFQnd3T1EzcGxZMmdnVW1Wd2RXSnNhV014R2pBWUJnTlZCQW9NRVZkb1lXeGxZbTl1WlN3Z2N5NXlMbTh1Ck1SSXdFQVlEVlFRTERBbFhhR0ZzWldKdmJtVXhJVEFmQmdOVkJBTU1HSEp2YjNSRFFTNWtaWFl4TG5kb1lXeGwKWW05dVpTNXBiekFlRncweU1UQTNNREV4TWpVeE1qSmFGdzAwTVRBMk1qWXhNalV4TWpKYU1JR1NNUXN3Q1FZRApWUVFHRXdKRFdqRVhNQlVHQTFVRUNBd09RM3BsWTJnZ1VtVndkV0pzYVdNeEZ6QVZCZ05WQkFjTURrTjZaV05vCklGSmxjSFZpYkdsak1Sb3dHQVlEVlFRS0RCRlhhR0ZzWldKdmJtVXNJSE11Y2k1dkxqRVNNQkFHQTFVRUN3d0oKVjJoaGJHVmliMjVsTVNFd0h3WURWUVFEREJoeWIyOTBRMEV1WkdWMk1TNTNhR0ZzWldKdmJtVXVhVzh3Z2dFaQpNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURETS9tNFdpazRrMnJZWFpCU0NGamVHOGpoCjJHeG54RlYycVNERDluM2RLK3JtQ2tyUU9USFpSNmRqaTMyRDJlUU1nRlBVODhBdUhqM3ZIeHI1SDFGUlNuaGQKRWtKZWwwcFlNc21PMGs5MExWKy91VXZ2cVRpMDlQUmk0TkRlSXk4TUdGQTlWUXBHaHBCbkI5ckVvcC9yaHU3QgpJenR1dUdpNFp0dHIzcXhBT1J4a0pOdzRZYSszclYxbUJoY0pXbGVRNUdqeFZTdGRPaWJybUV3QWFWcEY1a2IrCmRUUmpiUjJKZnZoMUc2MDEzdmlCcnFOR2ZndFBHak1vWDBKVUNWTWIyV0hid0ZDUW1zNVdOMkVxY1NHWGhGdEoKNWN1WlJobGtTUzBVRUZ4SWMwNXNSanBBYmV3cUVycGsxYWVRUExaU29GUDhqdS9ZRmFOaHF0QVJYT1U3QWdNQgpBQUdqVXpCUk1CMEdBMVVkRGdRV0JCUUVudzlyZG41VXRKYlhTODNsUTRDZXRDMlVtakFmQmdOVkhTTUVHREFXCmdCUUVudzlyZG41VXRKYlhTODNsUTRDZXRDMlVtakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQTBHQ1NxR1NJYjMKRFFFQkN3VUFBNElCQVFDWDFkd2x6VXJJQW4zWlFLN2htQi9BN2k3dFJKTGhaQVJFUUVYbWFkY0M2aSsvdno3YQptMW8wMU40ajBseDViL1NDWU5abzA3bHdacE1ZOVdWQW1IckJzRzRGbGFMSTk2T2cyR3RCL3VCaW8rdTA4RTRFClJ5aDFPeVZyOEhKbTZtN0FqQm1wRW9Ec0R6ZTFpUzhhd3I4YnQ4cHp3Y3RTdHpYNFJrYmJkRG5VeU05QmdmSGEKOEJESTgvN3dhQTQyTmUyaWpBMmlEdjAxc2cweWxzYmIxb0ZKVXFMQ1FhaGIvV0JxeHFNUjR0NG9WVDl4TzVpYQplZHdZQWpYWTZmYWxBaHIxd01vVXdkRVhRMThWS0RkTVozS3dHaE01TDNVUzUrMEpoNUVoWStCQVhWYlZMMXNZClFDaEg3WEtYSXFkS0JnZjI1V2N1dlE1UkZOdXd4WDVpVUZORQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+deployment_id: dev1.
+kresconf: >-
+  -- get the name of the leading resolver process for later use
+
+  local kres_instance = os.getenv("SUPERVISOR_PROCESS_NAME")
+
+  -- do not use ipv6 for outgoing recursive queries by default
+
+  net.ipv6 = false
+
+  -- load all the knot resolver modules needed
+
+  modules = { 'workarounds < iterate', 'serve_stale < cache', 'hints > iterate',
+  'policy', 'stats', 'predict', 'bogus_log', 'http','whalebone' }
+
+  -- size of the dns cache is calculated during startup as 1/4 of available ram
+
+  cache.open(os.getenv('KNOT_CACHE_SIZE') * MB, 'lmdb:///var/lib/kres/cache')
+
+  -- exceptions for some troublesome domains
+
+  policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}),
+  {todname('microsoftonline.com')}))
+
+  policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}),
+  {todname('windows.net')}))
+
+  policy.add(policy.suffix(policy.FLAGS({'NO_0X20', 'NO_MINIMIZE'}),
+  {todname('trafficmanager.net')}))
+
+  -- signal firefox to disable DNS over HTTPS and use this resolver instead
+
+  policy.add(policy.suffix(policy.DENY, {todname('use-application-dns.net.')}))
+
+  -- prefill the cache with root zone content and update daily
+
+  if string.match(kres_instance, 'resolver_00') then
+    modules.load('prefill')
+    prefill.config({  ['.'] = { url = 'https://www.internic.net/domain/root.zone',  interval = 86400 }  })
+  end
+
+  -- bind wed management interface on localhost for automation purposes
+
+  --define Whalebone http management endpoints
+
+  --endpoint: wb-trace
+
+  local wbmgmt_trace = {'application/json',
+
+  function (h, stream)
+          -- Get request method and deal with it properly
+          local m = h:get(':method')
+          local path = h:get(':path')
+          local r = string.sub(path, string.find(path, "/", 2) + 1)
+          log('[wbmgmt_query] method %s path %s, %s', m, path, r)
+          if m == 'GET' then
+                  local s = whalebone.query(r)
+                  return s
+          else
+                  return 405, 'Cannot do that'
+          end
+  end}
+
+  --endpoint: wb-reload-caches
+
+  local wbmgmt_reload_caches = {'application/json',
+
+  function (h, stream)
+          -- Get request method and deal with it properly
+          local m = h:get(':method')
+          local path = h:get(':path')
+          if (m == 'GET') then
+                  local s = whalebone.load_newest_lmdbs()
+                  return s
+          else
+                  return 405, 'Cannot do that'
+          end
+  end}
+
+  -- register the new endpoints on the web management interface
+
+  my_mgmt_endpoints = http.configs._builtin.webmgmt.endpoints
+
+  my_mgmt_endpoints['/wb-trace'] = wbmgmt_trace
+
+  my_mgmt_endpoints['/wb-reload-caches'] = wbmgmt_reload_caches
+
+  http.config({
+          tls = false,
+          endpoints = my_mgmt_endpoints
+  }, 'webmgmt')
+
+  -- bind web management interface on localhost for automation purposes
+
+  pcall(net.listen, '127.0.0.1', 8453, { kind = 'webmgmt' })
+
+  -- end of defaults, resolver specific configuration follows
+
+  -- Default DNS bindings
+
+  for name, iface in pairs(net.interfaces()) do pcall(net.listen, iface['addr'],
+  53) end

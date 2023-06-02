@@ -1,0 +1,12 @@
+helm install wb-resolver whalebone/wb-resolver -f ./resolver_49_params.yaml -f ./resolver_49_secrets.yml --set namespace=<your_namespace> -n <your_namespace> 
+
+
+
+
+
+Novej kresman image + envs (k2man), 
+novej consumer (k2tide) + ENV
+lr-agent - novy envy, 
+resolver novy envy
+blocking-oage komplet novy
+dnstag novy envy

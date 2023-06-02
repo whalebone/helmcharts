@@ -1,0 +1,271 @@
+version: '3'
+services:
+    lr-agent:
+        image: 'harbor.whalebone.io/resolver/agent:1.5.11'
+        name: lr-agent
+        stdin_open: true
+        tty: true
+        network_mode: host
+        restart: always
+        mem_limit: 2g
+        memswap_limit: 2g
+        mem_swappiness: 0
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: '1'
+        labels:
+            lr-agent: 1.5.11
+        environment:
+            CLIENT_CRT_BASE64: ''
+            CLIENT_KEY_BASE64: ''
+            PROXY_ADDRESS: 'wss://agentapi.whalebone.io:443/wsproxy/ws'
+            WEBSOCKET_LOGGING: '10'
+            UPGRADE_SLEEP: 30
+            DNS_TIMEOUT: 3
+            DNS_LIFETIME: 3
+            RESOLVER_TRANSLATION_CHECK_METHOD: trace
+            CA_CRT_BASE64: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUdURENDQkRTZ0F3SUJBZ0lVZGdieVJGRDdIZWhCUzlFbDduZk84K083eDlvd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2J6RUxNQWtHQTFVRUJoTUNRMW94RnpBVkJnTlZCQWdURGtONlpXTm9JRkpsY0hWaWJHbGpNUmN3RlFZRApWUVFIRXc1RGVtVmphQ0JTWlhCMVlteHBZekVhTUJnR0ExVUVDaE1SVjJoaGJHVmliMjVsTENCekxuSXVieTR4CkVqQVFCZ05WQkFzVENWZG9ZV3hsWW05dVpUQWVGdzB5TVRFd01UTXhNak14TkRGYUZ3MDBNVEV3TURneE1qTXgKTkRGYU1HOHhDekFKQmdOVkJBWVRBa05hTVJjd0ZRWURWUVFJRXc1RGVtVmphQ0JTWlhCMVlteHBZekVYTUJVRwpBMVVFQnhNT1EzcGxZMmdnVW1Wd2RXSnNhV014R2pBWUJnTlZCQW9URVZkb1lXeGxZbTl1WlN3Z2N5NXlMbTh1Ck1SSXdFQVlEVlFRTEV3bFhhR0ZzWldKdmJtVXdnZ0lpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElDRHdBd2dnSUsKQW9JQ0FRRDM5MGhzTDJVeSttaDBMdzlwR0hFUkNEVXFzZEI5YjdHbUVTdDI4VWhObUVQZjltSG1oZ212R0psYwpaem4zTzlzOGNOVE9rUmcwTmV4UW9Jcy9SQ0NhcmF3dHZOVUJmZ2xvN2JWVUhMcWp5VmZUQkkwWmMyTE9Yand3CnV2SjA1d1kvdE4vZ0FSbVJpcDg4ZGxzeTNQd3ZBUjF6M2dXWDVRYmc5Z0xnWnBWbUZSdDBGN0hmeS9zNUlmTEwKMm91bXhFdEtjNXRodTA5SXUxMVAyMUtXNmpjSFhEU0xBL2F5TmRUTDlwRlpwTXBaS3I5bVI4V0ZTM0QybWc0NQpFZjJnbTRDN08reXhYUjBSb3BteGRQMldXRktWKzc0VC9yR0ZCcTY4cTcrVXFUV2ZROTVPZWR0d3c4K1VrbFI1CkFNbndtcEZMQ1NyRWNhc1RESVJWUkwzZkc2Tmh1eGlNT0x6OGZHVFZwNlFwMDcrd0ZCWEZBSHFnc0N0L0JmZlkKMlpkdW5hWXViVlJkOTVFQUlNbzc2UmxJR3FjRmtXKzRnemRpL0ExWFV5NVJaYVBVdWYzd21EN0pObm5sNEhVUQpTSFlyeEdCTCtQVkZjRVNRSXd4VDh0QkZBU3JvRnlURmp4bkltcThLQ29ja1Jtcy9ZQi9BejhXdGZXK3QyWkJwCmNMcDZMdk1QMXpocmtnTHlydkc1TGtjSnRrTjYzTFRvcGhFSDc2eWhUZG9HL2pla00rYnhQWTlESVlEWDZ5VXMKYm0xSVJidzE2UjRyMWpocFZGd3E5UGlVN0dxRHhSb21maUxzM3ViSzRZeDM5RDl2WTh4MjYxRUNQQVhBd3k2ZwpqWEd6V250UXcwd1dJeDR0aTVPVEI4RG5xOHZyZkgzSFlBKzlDUWtKVFFmWm9TSXNtUUlEQVFBQm80SGZNSUhjCk1Bd0dBMVVkRXdRRk1BTUJBZjh3SFFZRFZSME9CQllFRklTZm5Rd1dXOEtvcXVzdlF3L0JYcm1BQUtpck1JR3MKQmdOVkhTTUVnYVF3Z2FHQUZJU2ZuUXdXVzhLb3F1c3ZRdy9CWHJtQUFLaXJvWE9rY1RCdk1Rc3dDUVlEVlFRRwpFd0pEV2pFWE1CVUdBMVVFQ0JNT1EzcGxZMmdnVW1Wd2RXSnNhV014RnpBVkJnTlZCQWNURGtONlpXTm9JRkpsCmNIVmliR2xqTVJvd0dBWURWUVFLRXhGWGFHRnNaV0p2Ym1Vc0lITXVjaTV2TGpFU01CQUdBMVVFQ3hNSlYyaGgKYkdWaWIyNWxnaFIyQnZKRVVQc2Q2RUZMMFNYdWQ4N3o0N3ZIMmpBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQWdFQQp1aWN0QldnVnI3Q1BvaEJJZ1VKUHhjL1F2QnBsMC9qRXg1RHlmL2ZZL1ZlVEVUM2gwK2Y2eVNxOUM1ZEwxV2x3CjMzM0F5eENxOUFxdE9jL0JEcHZlVEs0a21Mc3RWSDdPUmhQd0xFbGNCV2VCWnBTY2p3T21XOGpRY2xWSVQrTngKSFl0MG5zTjB2NzJzdEVuMWY2TjhmNEFZQ1k4ZWN6b2hkMVhPN0p1c3RuajIwc3IyN09qKys2bFpncDluNE1WYQp5ZE1ZVHp4Ykl6ZlU1eGc1bFpIUDR4cDF1eWJ3eXlnVXk0MmYyTEdhMlFVeWNoTXhEZmFDdHljSUgwa0ZGdnIvCnExY3hBMFJ5Tm1jM1ZJZVR3MTJNU2NQZVhlZ1RaaXVVbVd5Z1ltK2lwbldCQU1VT3BFTFVSenVLMHJHa3Q4RkYKMm1ZOURJakREVDdkRnBxUlNtNzFOWjBaaWVXYk9MNEI0SlFsNjBzUEYxWElTY08wdDZzaHJIc3BueEZQZmxWSQpkcG1KUUVLNktWSDBsOXhZQVhhOW9aMjdwMk9LRlpxL2s0R1lQRTVoNXoyNllOOXBQcGd1Tlo5UEhJUTBLbE15CkZybXlLTU5wVXZVK1dvUnh0QUhsSm9TQXA2UHJ1Wkk0RDFidmF0V3VKK2o5Z0xuMkVNdU8rVUpWUTBtbE9vMGwKNkd3OVd0bmJ3NFlGcDJhY21UY3RMWkdraGtsaUZMYXg1elkxWVpxODlYbEhMMjRhRlNlcjE0OStxNUR6Slp5aQpOaGNhTS83Qk5xMEM2WW5Ja3RtSWtuNW45dmhpc3lGblczbkNPWHV0SnhJQUtuWEI3ZVl5VmhpSmJlcDVYL1I4CmM5TUljOWplaTgwczh6YUNnNUhGdndsN01OWDRVSVcvNTZjWmhQVEZENU09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+            KRESMAN_API_FORMAT: v2
+            KRESMAN_LISTENER: 'http://localhost:8080'
+            UPGRADE_MEMORY_THRESHOLD: 0.8
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock'
+            - '/etc/whalebone/:/etc/whalebone/etc/'
+            - '/var/whalebone/cli/:/etc/whalebone/cli/'
+            - '/var/whalebone/requests/:/etc/whalebone/requests/'
+            - '/var/log/whalebone/agent/:/etc/whalebone/logs/'
+            - '/var/sinkhole/:/etc/whalebone/kresman'
+            - '/var/log/whalebone/:/etc/whalebone/sysinfo/'
+            - '/var/lib/kres/tty/:/etc/whalebone/tty/'
+            - '/:/opt/host/:ro'
+    resolver:
+        image: 'harbor.whalebone.io/resolver/kres:5.6.0-661'
+        labels:
+            resolver: 5.6.0-661
+        logging:
+            driver: json-file
+            options:
+                max-size: 1000m
+                max-file: '1'
+        tty: true
+        restart: always
+        privileged: true
+        mem_limit: 32g
+        memswap_limit: 32g
+        mem_swappiness: 0
+        cpu_shares: 4096
+        tmpfs: /var/lib/kres/cache
+        volumes:
+            - '/etc/whalebone/kres:/etc/kres/'
+            - '/var/log/whalebone/:/var/log/whalebone/'
+            - '/var/lib/kres/tty:/tty/control'
+            - '/var/whalebone/:/var/whalebone/'
+            - '/var/whalebone/dnstap:/var/whalebone/dnstap'
+        network_mode: host
+        environment:
+            SINKIP: 159.100.251.128
+            SINKIPV6: '::1'
+            SINKTTL: 1
+            LMDB_ROOT: /var/whalebone/lmdb
+            LOG_THREAT: 127.0.0.1
+            LOG_CONTENT: 127.0.0.1
+            LMDB_VERSION: v5
+    kresman:
+        image: 'harbor.whalebone.io/resolver/k2man:1.3.24'
+        labels:
+            kresman: 1.3.24
+        restart: always
+        network_mode: host
+        volumes:
+            - '/var/whalebone/:/var/whalebone/'
+            - '/var/log/whalebone/:/var/log/whalebone/'
+        environment:
+            CA_CRT_BASE64: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUdURENDQkRTZ0F3SUJBZ0lVZGdieVJGRDdIZWhCUzlFbDduZk84K083eDlvd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2J6RUxNQWtHQTFVRUJoTUNRMW94RnpBVkJnTlZCQWdURGtONlpXTm9JRkpsY0hWaWJHbGpNUmN3RlFZRApWUVFIRXc1RGVtVmphQ0JTWlhCMVlteHBZekVhTUJnR0ExVUVDaE1SVjJoaGJHVmliMjVsTENCekxuSXVieTR4CkVqQVFCZ05WQkFzVENWZG9ZV3hsWW05dVpUQWVGdzB5TVRFd01UTXhNak14TkRGYUZ3MDBNVEV3TURneE1qTXgKTkRGYU1HOHhDekFKQmdOVkJBWVRBa05hTVJjd0ZRWURWUVFJRXc1RGVtVmphQ0JTWlhCMVlteHBZekVYTUJVRwpBMVVFQnhNT1EzcGxZMmdnVW1Wd2RXSnNhV014R2pBWUJnTlZCQW9URVZkb1lXeGxZbTl1WlN3Z2N5NXlMbTh1Ck1SSXdFQVlEVlFRTEV3bFhhR0ZzWldKdmJtVXdnZ0lpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElDRHdBd2dnSUsKQW9JQ0FRRDM5MGhzTDJVeSttaDBMdzlwR0hFUkNEVXFzZEI5YjdHbUVTdDI4VWhObUVQZjltSG1oZ212R0psYwpaem4zTzlzOGNOVE9rUmcwTmV4UW9Jcy9SQ0NhcmF3dHZOVUJmZ2xvN2JWVUhMcWp5VmZUQkkwWmMyTE9Yand3CnV2SjA1d1kvdE4vZ0FSbVJpcDg4ZGxzeTNQd3ZBUjF6M2dXWDVRYmc5Z0xnWnBWbUZSdDBGN0hmeS9zNUlmTEwKMm91bXhFdEtjNXRodTA5SXUxMVAyMUtXNmpjSFhEU0xBL2F5TmRUTDlwRlpwTXBaS3I5bVI4V0ZTM0QybWc0NQpFZjJnbTRDN08reXhYUjBSb3BteGRQMldXRktWKzc0VC9yR0ZCcTY4cTcrVXFUV2ZROTVPZWR0d3c4K1VrbFI1CkFNbndtcEZMQ1NyRWNhc1RESVJWUkwzZkc2Tmh1eGlNT0x6OGZHVFZwNlFwMDcrd0ZCWEZBSHFnc0N0L0JmZlkKMlpkdW5hWXViVlJkOTVFQUlNbzc2UmxJR3FjRmtXKzRnemRpL0ExWFV5NVJaYVBVdWYzd21EN0pObm5sNEhVUQpTSFlyeEdCTCtQVkZjRVNRSXd4VDh0QkZBU3JvRnlURmp4bkltcThLQ29ja1Jtcy9ZQi9BejhXdGZXK3QyWkJwCmNMcDZMdk1QMXpocmtnTHlydkc1TGtjSnRrTjYzTFRvcGhFSDc2eWhUZG9HL2pla00rYnhQWTlESVlEWDZ5VXMKYm0xSVJidzE2UjRyMWpocFZGd3E5UGlVN0dxRHhSb21maUxzM3ViSzRZeDM5RDl2WTh4MjYxRUNQQVhBd3k2ZwpqWEd6V250UXcwd1dJeDR0aTVPVEI4RG5xOHZyZkgzSFlBKzlDUWtKVFFmWm9TSXNtUUlEQVFBQm80SGZNSUhjCk1Bd0dBMVVkRXdRRk1BTUJBZjh3SFFZRFZSME9CQllFRklTZm5Rd1dXOEtvcXVzdlF3L0JYcm1BQUtpck1JR3MKQmdOVkhTTUVnYVF3Z2FHQUZJU2ZuUXdXVzhLb3F1c3ZRdy9CWHJtQUFLaXJvWE9rY1RCdk1Rc3dDUVlEVlFRRwpFd0pEV2pFWE1CVUdBMVVFQ0JNT1EzcGxZMmdnVW1Wd2RXSnNhV014RnpBVkJnTlZCQWNURGtONlpXTm9JRkpsCmNIVmliR2xqTVJvd0dBWURWUVFLRXhGWGFHRnNaV0p2Ym1Vc0lITXVjaTV2TGpFU01CQUdBMVVFQ3hNSlYyaGgKYkdWaWIyNWxnaFIyQnZKRVVQc2Q2RUZMMFNYdWQ4N3o0N3ZIMmpBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQWdFQQp1aWN0QldnVnI3Q1BvaEJJZ1VKUHhjL1F2QnBsMC9qRXg1RHlmL2ZZL1ZlVEVUM2gwK2Y2eVNxOUM1ZEwxV2x3CjMzM0F5eENxOUFxdE9jL0JEcHZlVEs0a21Mc3RWSDdPUmhQd0xFbGNCV2VCWnBTY2p3T21XOGpRY2xWSVQrTngKSFl0MG5zTjB2NzJzdEVuMWY2TjhmNEFZQ1k4ZWN6b2hkMVhPN0p1c3RuajIwc3IyN09qKys2bFpncDluNE1WYQp5ZE1ZVHp4Ykl6ZlU1eGc1bFpIUDR4cDF1eWJ3eXlnVXk0MmYyTEdhMlFVeWNoTXhEZmFDdHljSUgwa0ZGdnIvCnExY3hBMFJ5Tm1jM1ZJZVR3MTJNU2NQZVhlZ1RaaXVVbVd5Z1ltK2lwbldCQU1VT3BFTFVSenVLMHJHa3Q4RkYKMm1ZOURJakREVDdkRnBxUlNtNzFOWjBaaWVXYk9MNEI0SlFsNjBzUEYxWElTY08wdDZzaHJIc3BueEZQZmxWSQpkcG1KUUVLNktWSDBsOXhZQVhhOW9aMjdwMk9LRlpxL2s0R1lQRTVoNXoyNllOOXBQcGd1Tlo5UEhJUTBLbE15CkZybXlLTU5wVXZVK1dvUnh0QUhsSm9TQXA2UHJ1Wkk0RDFidmF0V3VKK2o5Z0xuMkVNdU8rVUpWUTBtbE9vMGwKNkd3OVd0bmJ3NFlGcDJhY21UY3RMWkdraGtsaUZMYXg1elkxWVpxODlYbEhMMjRhRlNlcjE0OStxNUR6Slp5aQpOaGNhTS83Qk5xMEM2WW5Ja3RtSWtuNW45dmhpc3lGblczbkNPWHV0SnhJQUtuWEI3ZVl5VmhpSmJlcDVYL1I4CmM5TUljOWplaTgwczh6YUNnNUhGdndsN01OWDRVSVcvNTZjWmhQVEZENU09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+            CLIENT_CRT_BASE64: ''
+            CLIENT_KEY_BASE64: ''
+            GRPC_INSECURE_ENDPOINT: '127.0.0.1:8080'
+            GRPC_SERVER_TYPE: unix
+            GRPC_SERVER_SOCKET: /var/whalebone/kresman.sock
+            LMDB_VERSION: v5
+            SINKHOLE_ENABLED: false
+            RESOLVERAPI_URL: ''
+        privileged: true
+        mem_limit: 256m
+        memswap_limit: 256m
+        mem_swappiness: 0
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: '1'
+    blocking-page:
+        image: 'harbor.whalebone.io/resolver/k2web:1.2.12'
+        labels:
+            blocking-page: 1.2.12
+        environment:
+            GRPC_GATEWAY_ENDPOINT: '127.0.0.1:8081'
+            GRPC_INSECURE_ENDPOINT: '127.0.1.1:8091'
+            GRPC_CLIENT_TYPE: unix
+            GRPC_CLIENT_SOCKET: /var/whalebone/kresman.sock
+            WEB_PORT: 80
+            WEB_PORT_SECURE: 443
+            REDIRECT_TO: http
+            LMDB_VERSION: v5
+        volumes:
+            - '/var/whalebone/:/var/whalebone/'
+        network_mode: host
+        mem_limit: 2g
+        memswap_limit: 2g
+        mem_swappiness: 0
+        restart: always
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: '1'
+    dnstag:
+        name: dnstag
+        labels:
+            dnstag: 1.7.14
+        image: 'harbor.whalebone.io/resolver/dnstag:1.7.14'
+        entrypoint: /go/bin/cmd
+        command: '-b -u=/var/whalebone/dnstap/dnstap.sock -a -w /var/log/whalebone/passivedns.log'
+        stdin_open: true
+        tty: true
+        network_mode: host
+        restart: always
+        mem_limit: 1000m
+        memswap_limit: 1000m
+        mem_swappiness: 0
+        environment:
+            DNSTAG_LRU_CACHE_SIZE: 2000000
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: '1'
+        volumes:
+            - '/var/whalebone:/var/whalebone'
+            - '/var/whalebone/db:/var/whalebone/dnstag/db'
+            - '/var/whalebone/lmdb:/var/whalebone/lmdb'
+            - '/var/log/whalebone:/var/log/whalebone'
+            - '/var/whalebone/dnstap:/var/whalebone/dnstap'
+    logstream:
+        image: 'harbor.whalebone.io/resolver/logstream:7.13.2-4'
+        network_mode: host
+        labels:
+            logstream: 7.13.2-4
+        volumes:
+            - '/var/log/whalebone:/var/log/whalebone'
+            - '/var/lib/docker/containers:/opt/containers:ro'
+            - 'registry:/usr/share/filebeat/data'
+        environment:
+            LOGSTREAM_HOSTS: '["logger.whalebone.io:443"]'
+            CA_CRT_BASE64: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUdURENDQkRTZ0F3SUJBZ0lVZGdieVJGRDdIZWhCUzlFbDduZk84K083eDlvd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2J6RUxNQWtHQTFVRUJoTUNRMW94RnpBVkJnTlZCQWdURGtONlpXTm9JRkpsY0hWaWJHbGpNUmN3RlFZRApWUVFIRXc1RGVtVmphQ0JTWlhCMVlteHBZekVhTUJnR0ExVUVDaE1SVjJoaGJHVmliMjVsTENCekxuSXVieTR4CkVqQVFCZ05WQkFzVENWZG9ZV3hsWW05dVpUQWVGdzB5TVRFd01UTXhNak14TkRGYUZ3MDBNVEV3TURneE1qTXgKTkRGYU1HOHhDekFKQmdOVkJBWVRBa05hTVJjd0ZRWURWUVFJRXc1RGVtVmphQ0JTWlhCMVlteHBZekVYTUJVRwpBMVVFQnhNT1EzcGxZMmdnVW1Wd2RXSnNhV014R2pBWUJnTlZCQW9URVZkb1lXeGxZbTl1WlN3Z2N5NXlMbTh1Ck1SSXdFQVlEVlFRTEV3bFhhR0ZzWldKdmJtVXdnZ0lpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElDRHdBd2dnSUsKQW9JQ0FRRDM5MGhzTDJVeSttaDBMdzlwR0hFUkNEVXFzZEI5YjdHbUVTdDI4VWhObUVQZjltSG1oZ212R0psYwpaem4zTzlzOGNOVE9rUmcwTmV4UW9Jcy9SQ0NhcmF3dHZOVUJmZ2xvN2JWVUhMcWp5VmZUQkkwWmMyTE9Yand3CnV2SjA1d1kvdE4vZ0FSbVJpcDg4ZGxzeTNQd3ZBUjF6M2dXWDVRYmc5Z0xnWnBWbUZSdDBGN0hmeS9zNUlmTEwKMm91bXhFdEtjNXRodTA5SXUxMVAyMUtXNmpjSFhEU0xBL2F5TmRUTDlwRlpwTXBaS3I5bVI4V0ZTM0QybWc0NQpFZjJnbTRDN08reXhYUjBSb3BteGRQMldXRktWKzc0VC9yR0ZCcTY4cTcrVXFUV2ZROTVPZWR0d3c4K1VrbFI1CkFNbndtcEZMQ1NyRWNhc1RESVJWUkwzZkc2Tmh1eGlNT0x6OGZHVFZwNlFwMDcrd0ZCWEZBSHFnc0N0L0JmZlkKMlpkdW5hWXViVlJkOTVFQUlNbzc2UmxJR3FjRmtXKzRnemRpL0ExWFV5NVJaYVBVdWYzd21EN0pObm5sNEhVUQpTSFlyeEdCTCtQVkZjRVNRSXd4VDh0QkZBU3JvRnlURmp4bkltcThLQ29ja1Jtcy9ZQi9BejhXdGZXK3QyWkJwCmNMcDZMdk1QMXpocmtnTHlydkc1TGtjSnRrTjYzTFRvcGhFSDc2eWhUZG9HL2pla00rYnhQWTlESVlEWDZ5VXMKYm0xSVJidzE2UjRyMWpocFZGd3E5UGlVN0dxRHhSb21maUxzM3ViSzRZeDM5RDl2WTh4MjYxRUNQQVhBd3k2ZwpqWEd6V250UXcwd1dJeDR0aTVPVEI4RG5xOHZyZkgzSFlBKzlDUWtKVFFmWm9TSXNtUUlEQVFBQm80SGZNSUhjCk1Bd0dBMVVkRXdRRk1BTUJBZjh3SFFZRFZSME9CQllFRklTZm5Rd1dXOEtvcXVzdlF3L0JYcm1BQUtpck1JR3MKQmdOVkhTTUVnYVF3Z2FHQUZJU2ZuUXdXVzhLb3F1c3ZRdy9CWHJtQUFLaXJvWE9rY1RCdk1Rc3dDUVlEVlFRRwpFd0pEV2pFWE1CVUdBMVVFQ0JNT1EzcGxZMmdnVW1Wd2RXSnNhV014RnpBVkJnTlZCQWNURGtONlpXTm9JRkpsCmNIVmliR2xqTVJvd0dBWURWUVFLRXhGWGFHRnNaV0p2Ym1Vc0lITXVjaTV2TGpFU01CQUdBMVVFQ3hNSlYyaGgKYkdWaWIyNWxnaFIyQnZKRVVQc2Q2RUZMMFNYdWQ4N3o0N3ZIMmpBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQWdFQQp1aWN0QldnVnI3Q1BvaEJJZ1VKUHhjL1F2QnBsMC9qRXg1RHlmL2ZZL1ZlVEVUM2gwK2Y2eVNxOUM1ZEwxV2x3CjMzM0F5eENxOUFxdE9jL0JEcHZlVEs0a21Mc3RWSDdPUmhQd0xFbGNCV2VCWnBTY2p3T21XOGpRY2xWSVQrTngKSFl0MG5zTjB2NzJzdEVuMWY2TjhmNEFZQ1k4ZWN6b2hkMVhPN0p1c3RuajIwc3IyN09qKys2bFpncDluNE1WYQp5ZE1ZVHp4Ykl6ZlU1eGc1bFpIUDR4cDF1eWJ3eXlnVXk0MmYyTEdhMlFVeWNoTXhEZmFDdHljSUgwa0ZGdnIvCnExY3hBMFJ5Tm1jM1ZJZVR3MTJNU2NQZVhlZ1RaaXVVbVd5Z1ltK2lwbldCQU1VT3BFTFVSenVLMHJHa3Q4RkYKMm1ZOURJakREVDdkRnBxUlNtNzFOWjBaaWVXYk9MNEI0SlFsNjBzUEYxWElTY08wdDZzaHJIc3BueEZQZmxWSQpkcG1KUUVLNktWSDBsOXhZQVhhOW9aMjdwMk9LRlpxL2s0R1lQRTVoNXoyNllOOXBQcGd1Tlo5UEhJUTBLbE15CkZybXlLTU5wVXZVK1dvUnh0QUhsSm9TQXA2UHJ1Wkk0RDFidmF0V3VKK2o5Z0xuMkVNdU8rVUpWUTBtbE9vMGwKNkd3OVd0bmJ3NFlGcDJhY21UY3RMWkdraGtsaUZMYXg1elkxWVpxODlYbEhMMjRhRlNlcjE0OStxNUR6Slp5aQpOaGNhTS83Qk5xMEM2WW5Ja3RtSWtuNW45dmhpc3lGblczbkNPWHV0SnhJQUtuWEI3ZVl5VmhpSmJlcDVYL1I4CmM5TUljOWplaTgwczh6YUNnNUhGdndsN01OWDRVSVcvNTZjWmhQVEZENU09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+            CLIENT_CRT_BASE64: ''
+            CLIENT_KEY_BASE64: ''
+        restart: always
+        mem_limit: 1g
+        memswap_limit: 1g
+        mem_swappiness: 0
+        cpu_shares: 512
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: '1'
+    logrotate:
+        image: 'harbor.whalebone.io/resolver/logrotate:1.2'
+        labels:
+            logrotate: '1.2'
+        volumes:
+            - '/var/log/whalebone:/var/log/whalebone'
+        environment:
+            LOGS_DIRECTORIES: /var/log/whalebone
+            LOGROTATE_SIZE: 1G
+            LOGROTATE_COMPRESSION: compress
+            LOGROTATE_CRONSCHEDULE: '0 */10 * * * *'
+            LOGROTATE_COPIES: 5
+            LOGROTATE_DELAYCOMPRESS: 'false'
+        restart: always
+        network_mode: host
+        mem_limit: 1g
+        memswap_limit: 1g
+        mem_swappiness: 0
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: '1'
+        cpu_shares: 128
+    logcat:
+        image: 'harbor.whalebone.io/resolver/logcat:7.13.2'
+        labels:
+            logcat: 7.13.2
+        volumes:
+            - '/var/log/whalebone:/var/log/whalebone'
+        environment:
+            HOST: '127.0.0.1:4000'
+            PATH_OUT: /var/log/whalebone/
+            FILENAME: whalebone.log
+        restart: always
+        network_mode: host
+        mem_limit: 4g
+        memswap_limit: 4g
+        mem_swappiness: 0
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: '1'
+    logcat-content:
+        image: 'harbor.whalebone.io/resolver/logcat:7.13.2'
+        labels:
+            logcat-content: 7.13.2
+        volumes:
+            - '/var/log/whalebone:/var/log/whalebone'
+        environment:
+            HOST: '127.0.0.1:4001'
+            PATH_OUT: /var/log/whalebone/
+            FILENAME: content.log
+        restart: always
+        network_mode: host
+        mem_limit: 4g
+        memswap_limit: 4g
+        mem_swappiness: 0
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: '1'
+    consumer:
+        image: 'harbor.whalebone.io/resolver/k2tide:0.5.0'
+        labels:
+            consumer: 0.5.0
+        mem_limit: 200m
+        memswap_limit: 200m
+        mem_swappiness: 0
+        cpu_shares: 512
+        stdin_open: true
+        tty: true
+        network_mode: host
+        restart: always
+        volumes:
+            - '/var/log/whalebone/consumer/:/opt/consumer/logs/'
+            - '/var/whalebone/:/var/whalebone/'
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+                max-file: '1'
+        environment:
+            CA_CRT_BASE64: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUdURENDQkRTZ0F3SUJBZ0lVZGdieVJGRDdIZWhCUzlFbDduZk84K083eDlvd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2J6RUxNQWtHQTFVRUJoTUNRMW94RnpBVkJnTlZCQWdURGtONlpXTm9JRkpsY0hWaWJHbGpNUmN3RlFZRApWUVFIRXc1RGVtVmphQ0JTWlhCMVlteHBZekVhTUJnR0ExVUVDaE1SVjJoaGJHVmliMjVsTENCekxuSXVieTR4CkVqQVFCZ05WQkFzVENWZG9ZV3hsWW05dVpUQWVGdzB5TVRFd01UTXhNak14TkRGYUZ3MDBNVEV3TURneE1qTXgKTkRGYU1HOHhDekFKQmdOVkJBWVRBa05hTVJjd0ZRWURWUVFJRXc1RGVtVmphQ0JTWlhCMVlteHBZekVYTUJVRwpBMVVFQnhNT1EzcGxZMmdnVW1Wd2RXSnNhV014R2pBWUJnTlZCQW9URVZkb1lXeGxZbTl1WlN3Z2N5NXlMbTh1Ck1SSXdFQVlEVlFRTEV3bFhhR0ZzWldKdmJtVXdnZ0lpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElDRHdBd2dnSUsKQW9JQ0FRRDM5MGhzTDJVeSttaDBMdzlwR0hFUkNEVXFzZEI5YjdHbUVTdDI4VWhObUVQZjltSG1oZ212R0psYwpaem4zTzlzOGNOVE9rUmcwTmV4UW9Jcy9SQ0NhcmF3dHZOVUJmZ2xvN2JWVUhMcWp5VmZUQkkwWmMyTE9Yand3CnV2SjA1d1kvdE4vZ0FSbVJpcDg4ZGxzeTNQd3ZBUjF6M2dXWDVRYmc5Z0xnWnBWbUZSdDBGN0hmeS9zNUlmTEwKMm91bXhFdEtjNXRodTA5SXUxMVAyMUtXNmpjSFhEU0xBL2F5TmRUTDlwRlpwTXBaS3I5bVI4V0ZTM0QybWc0NQpFZjJnbTRDN08reXhYUjBSb3BteGRQMldXRktWKzc0VC9yR0ZCcTY4cTcrVXFUV2ZROTVPZWR0d3c4K1VrbFI1CkFNbndtcEZMQ1NyRWNhc1RESVJWUkwzZkc2Tmh1eGlNT0x6OGZHVFZwNlFwMDcrd0ZCWEZBSHFnc0N0L0JmZlkKMlpkdW5hWXViVlJkOTVFQUlNbzc2UmxJR3FjRmtXKzRnemRpL0ExWFV5NVJaYVBVdWYzd21EN0pObm5sNEhVUQpTSFlyeEdCTCtQVkZjRVNRSXd4VDh0QkZBU3JvRnlURmp4bkltcThLQ29ja1Jtcy9ZQi9BejhXdGZXK3QyWkJwCmNMcDZMdk1QMXpocmtnTHlydkc1TGtjSnRrTjYzTFRvcGhFSDc2eWhUZG9HL2pla00rYnhQWTlESVlEWDZ5VXMKYm0xSVJidzE2UjRyMWpocFZGd3E5UGlVN0dxRHhSb21maUxzM3ViSzRZeDM5RDl2WTh4MjYxRUNQQVhBd3k2ZwpqWEd6V250UXcwd1dJeDR0aTVPVEI4RG5xOHZyZkgzSFlBKzlDUWtKVFFmWm9TSXNtUUlEQVFBQm80SGZNSUhjCk1Bd0dBMVVkRXdRRk1BTUJBZjh3SFFZRFZSME9CQllFRklTZm5Rd1dXOEtvcXVzdlF3L0JYcm1BQUtpck1JR3MKQmdOVkhTTUVnYVF3Z2FHQUZJU2ZuUXdXVzhLb3F1c3ZRdy9CWHJtQUFLaXJvWE9rY1RCdk1Rc3dDUVlEVlFRRwpFd0pEV2pFWE1CVUdBMVVFQ0JNT1EzcGxZMmdnVW1Wd2RXSnNhV014RnpBVkJnTlZCQWNURGtONlpXTm9JRkpsCmNIVmliR2xqTVJvd0dBWURWUVFLRXhGWGFHRnNaV0p2Ym1Vc0lITXVjaTV2TGpFU01CQUdBMVVFQ3hNSlYyaGgKYkdWaWIyNWxnaFIyQnZKRVVQc2Q2RUZMMFNYdWQ4N3o0N3ZIMmpBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQWdFQQp1aWN0QldnVnI3Q1BvaEJJZ1VKUHhjL1F2QnBsMC9qRXg1RHlmL2ZZL1ZlVEVUM2gwK2Y2eVNxOUM1ZEwxV2x3CjMzM0F5eENxOUFxdE9jL0JEcHZlVEs0a21Mc3RWSDdPUmhQd0xFbGNCV2VCWnBTY2p3T21XOGpRY2xWSVQrTngKSFl0MG5zTjB2NzJzdEVuMWY2TjhmNEFZQ1k4ZWN6b2hkMVhPN0p1c3RuajIwc3IyN09qKys2bFpncDluNE1WYQp5ZE1ZVHp4Ykl6ZlU1eGc1bFpIUDR4cDF1eWJ3eXlnVXk0MmYyTEdhMlFVeWNoTXhEZmFDdHljSUgwa0ZGdnIvCnExY3hBMFJ5Tm1jM1ZJZVR3MTJNU2NQZVhlZ1RaaXVVbVd5Z1ltK2lwbldCQU1VT3BFTFVSenVLMHJHa3Q4RkYKMm1ZOURJakREVDdkRnBxUlNtNzFOWjBaaWVXYk9MNEI0SlFsNjBzUEYxWElTY08wdDZzaHJIc3BueEZQZmxWSQpkcG1KUUVLNktWSDBsOXhZQVhhOW9aMjdwMk9LRlpxL2s0R1lQRTVoNXoyNllOOXBQcGd1Tlo5UEhJUTBLbE15CkZybXlLTU5wVXZVK1dvUnh0QUhsSm9TQXA2UHJ1Wkk0RDFidmF0V3VKK2o5Z0xuMkVNdU8rVUpWUTBtbE9vMGwKNkd3OVd0bmJ3NFlGcDJhY21UY3RMWkdraGtsaUZMYXg1elkxWVpxODlYbEhMMjRhRlNlcjE0OStxNUR6Slp5aQpOaGNhTS83Qk5xMEM2WW5Ja3RtSWtuNW45dmhpc3lGblczbkNPWHV0SnhJQUtuWEI3ZVl5VmhpSmJlcDVYL1I4CmM5TUljOWplaTgwczh6YUNnNUhGdndsN01OWDRVSVcvNTZjWmhQVEZENU09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+            CLIENT_CRT_BASE64: ''
+            CLIENT_KEY_BASE64: ''
+            KAFKA_BROKER: 'stream.whalebone.io:443'
+            GRPC_CLIENT_TYPE: unix
+            GRPC_CLIENT_SOCKET: /var/whalebone/kresman.sock
+            LMDB_VERSION: v5
+            HTTP_PORT: 8888

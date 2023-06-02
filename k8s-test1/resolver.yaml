@@ -33,16 +33,13 @@ spec:
           value: '127.0.0.1'
           # value: 'logcat.resolver'
         - name: SINKIP
-          value: 159.100.251.128
+          value: 159.100.251.155
         - name: SINKIPV6
           value: '::1'
         - name: SINKTTL
           value: '1'
         - name: CACHE_SIZE
           value: '100'
-###
-        - name: LMDB_VERSION
-          value: v5
         image: {{ .Values.resolver.image }}:{{ .Values.resolver.tag }}
         volumeMounts:
         - mountPath: "/var/lib/kres/cache"
@@ -68,20 +65,44 @@ spec:
           value: {{ .Values.certificates.client_crt_base64 }}
         - name: CLIENT_KEY_BASE64
           value: {{ .Values.certificates.client_key_base64 }} 
+        - name: GRPC_ENABLED
+          value: 'true'
+        - name: KRES
+          value: '127.0.0.1'
+        - name: KRES_MAX_PORT
+          value: '8912'
+        - name: KRES_MIN_PORT
+          value: '8880'
+        - name: KRES_UPDATE_INTERVAL_S
+          value: '300'
+        - name: LMDB_MAP_SIZE
+          value: '268435456'
+        - name: LMDB_ROOT
+          value: /var/whalebone/lmdb
+        - name: PARTIAL_CACHE_RATIO
+          value: '0'
+        - name: PRIVATE_API_LISTENER
+          value: http://127.0.0.1:8080/
+        - name: RADIUS_ENABLED
+          value: 'false'
+        - name: RADIUS_PORT
+          value: '0'
+        - name: RESOLVERAPI_CERT_VALIDATION_ENABLED
+          value: 'false'
+        - name:  RESOLVERAPI_UPDATE_INTERVAL_S
+          value: '3600'
         - name:  RESOLVERAPI_URL
           value: https://resolverapi.{{ .Values.deployment_id }}whalebone.io:443/sinkit/rest/protostream/resolvercache
-        - name:  GRPC_INSECURE_ENDPOINT
-          value: '127.0.0.1:8080'
-        - name:  GRPC_SERVER_TYPE
-          value: unix
-        - name:  GRPC_SERVER_SOCKET
-          value: /var/whalebone/kresman.sock
-        - name:  LMDB_VERSION
-          value: v5
-        - name:  SINKHOLE_ENABLED
-          value: "false"
-
-
+        - name: RESOLVERAPI_VERSION
+          value: v4
+        - name: SECURITY_TOKEN
+          value: '0987654321'
+        - name: SHARED_FOLDER
+          value: /var/whalebone/data
+        - name: SINKHOLE_ENABLED
+          value: 'false'
+        - name: UDP_LOGGER_PORT
+          value: '0'
         image: {{ .Values.kresman.image }}:{{ .Values.kresman.tag }}
         volumeMounts:
         - mountPath: "/var/whalebone"
@@ -158,8 +179,12 @@ spec:
          # dnstag
       - name: dnstag
         env:
-        - name: DNSTAG_LRU_CACHE_SIZE
-          value: 2000000
+        - name: DNS_INTERFACE
+          value: any
+        - name: MAX_MEMORY
+          value: '256'
+        - name: PASSIVEDNS_LOGFILE
+          value: '/var/log/whalebone/passivedns.log'
         image: {{ .Values.dnstag.image }}:{{ .Values.dnstag.tag }}
         volumeMounts:
         - mountPath: "/var/log/whalebone"
@@ -187,14 +212,8 @@ spec:
           value: {{ .Values.certificates.client_key_base64 }}       
         - name: KAFKA_BROKER
           value: stream.{{ .Values.deployment_id }}whalebone.io
-        - name: GRPC_CLIENT_TYPE
-          value: unix
-        - name: GRPC_CLIENT_SOCKET
-          value: /var/whalebone/kresman.sock
-        - name: LMDB_VERSION
-          value: v5
-        - name: HTTP_PORT
-          value: 8888
+        - name: LOGGING_LEVEL
+          value: 'INFO'
         image: {{ .Values.consumer.image }}:{{ .Values.consumer.tag }}
 
       # lr-agent
@@ -220,13 +239,6 @@ spec:
           value: '10'
         - name: DEPLOYMENT_TYPE
           value: 'kubernetes'
-## new ENCS
-        - name: KRESMAN_API_FORMAT
-          value: v2
-        - name: KRESMAN_LISTENER
-          value: 'http://localhost:8080'
-        - name: UPGRADE_MEMORY_THRESHOLD
-          value: 0.8
         image: {{ .Values.lr_agent.image }}:{{ .Values.lr_agent.tag }}
         volumeMounts:
         - mountPath: "/etc/whalebone/sysinfo/"
@@ -274,63 +286,6 @@ spec:
       #           values:
       #           - "yes"
       # restartPolicy: Always
-
-    # blocking-page
-      - name: blocking-page
-        env:
-        - name: GRPC_GATEWAY_ENDPOINT
-          value: '127.0.0.1:8081'
-        - name: GRPC_INSECURE_ENDPOINT
-          value: '127.0.1.1:8091'
-        - name: GRPC_CLIENT_TYPE
-          value: unix
-        - name: GRPC_CLIENT_SOCKET
-          value: /var/whalebone/kresman.sock
-        - name: WEB_PORT
-          value: 80
-        - name: WEB_PORT_SECURE
-          value: 443
-        - name: REDIRECT_TO
-          value: http
-        - name: LMDB_VERSION
-          value: v5
-        image: {{ .Values.blocking-page.image }}:{{ .Values.blocking-page.tag }}
-        volumeMounts:
-        - mountPath: "/var/log/whalebone"
-          name: var-log-whalebone
-
-
-
-    blocking-page:
-        image: 'harbor.whalebone.io/resolver/k2web:1.2.12'
-        labels:
-            blocking-page: 1.2.12
-        environment:
-            GRPC_GATEWAY_ENDPOINT: '127.0.0.1:8081'
-            GRPC_INSECURE_ENDPOINT: '127.0.1.1:8091'
-            GRPC_CLIENT_TYPE: unix
-            GRPC_CLIENT_SOCKET: /var/whalebone/kresman.sock
-            WEB_PORT: 80
-            WEB_PORT_SECURE: 443
-            REDIRECT_TO: http
-            LMDB_VERSION: v5
-        volumes:
-            - '/var/whalebone/:/var/whalebone/'
-        network_mode: host
-        mem_limit: 2g
-        memswap_limit: 2g
-        mem_swappiness: 0
-        restart: always
-        logging:
-            driver: json-file
-            options:
-                max-size: 100m
-                max-file: '1'
-
-
-
-
-
 status: {}
 
 
