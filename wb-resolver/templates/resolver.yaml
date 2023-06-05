@@ -257,8 +257,8 @@ spec:
           value: v5
         image: {{ .Values.blockingpage.image }}:{{ .Values.blockingpage.tag }}
         volumeMounts:
-        - mountPath: "/var/log/whalebone"
-          name: var-log-whalebone
+        - mountPath: "/var/whalebone"
+          name: var-whalebone
 
 
 
