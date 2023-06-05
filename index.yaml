@@ -2,8 +2,19 @@ apiVersion: v1
 entries:
   wb-resolver:
   - apiVersion: v2
+    appVersion: 0.1.9
+    created: "2023-06-05T10:31:22.908692512+02:00"
+    description: A intallation of whalebone DNS resolver in Kubernetes
+    digest: e241f57ba5dfeebaa37d7983a63e2309ee5286be7fd4fbcbf37d98e067d436d2
+    icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
+    name: wb-resolver
+    type: application
+    urls:
+    - wb-resolver-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
     appVersion: 0.1.8
-    created: "2023-06-05T10:26:46.265160835+02:00"
+    created: "2023-06-05T10:31:22.908276888+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
     digest: 8f92e14fbef22f7544d866f1f6ddf5bf9dc9cc7b7a16165ae6bd1d677c7c1a07
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -14,7 +25,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: 0.1.7
-    created: "2023-06-05T10:26:46.264754144+02:00"
+    created: "2023-06-05T10:31:22.907649389+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
     digest: 85c9baaa1d7b2484938ac6880d29fa18fc987357ade37d1d321b918fa08ed7ae
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -25,7 +36,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 0.1.6
-    created: "2023-06-05T10:26:46.264158517+02:00"
+    created: "2023-06-05T10:31:22.906252647+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
     digest: 92fe7954a593071492e0a4a99296fb37320f4174fb86b8bb9279c02006ff00cc
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -36,7 +47,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 0.1.5
-    created: "2023-06-05T10:26:46.263410498+02:00"
+    created: "2023-06-05T10:31:22.905642528+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
     digest: eced55ae260bc258095e33f445de28da6df2c63741b3b9415caa45c546c71578
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -47,7 +58,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 0.1.4
-    created: "2023-06-05T10:26:46.255221007+02:00"
+    created: "2023-06-05T10:31:22.897698027+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
     digest: a1ba2ab0b291a736c844b4acfbbb02468029ed985a9168fe46588417fbd8300e
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -58,7 +69,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 0.1.3
-    created: "2023-06-05T10:26:46.25482471+02:00"
+    created: "2023-06-05T10:31:22.897322112+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
     digest: 5727b94418736e5fc404ecaa69556161d9371d420d8d01eb578c973a46353eee
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -67,4 +78,4 @@ entries:
     urls:
     - wb-resolver-0.1.3.tgz
     version: 0.1.3
-generated: "2023-06-05T10:26:46.254288019+02:00"
+generated: "2023-06-05T10:31:22.896815465+02:00"

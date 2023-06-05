@@ -236,6 +236,34 @@ spec:
         - mountPath: "/etc/whalebone/etc"
           name: etc-whalebone
 
+    # blockingpage
+      - name: blockingpage
+        env:
+        - name: GRPC_GATEWAY_ENDPOINT
+          value: '127.0.0.1:8081'
+        - name: GRPC_INSECURE_ENDPOINT
+          value: '127.0.1.1:8091'
+        - name: GRPC_CLIENT_TYPE
+          value: unix
+        - name: GRPC_CLIENT_SOCKET
+          value: /var/whalebone/kresman.sock
+        - name: WEB_PORT
+          value: '80'
+        - name: WEB_PORT_SECURE
+          value: '443'
+        - name: REDIRECT_TO
+          value: http
+        - name: LMDB_VERSION
+          value: v5
+        image: {{ .Values.blockingpage.image }}:{{ .Values.blockingpage.tag }}
+        volumeMounts:
+        - mountPath: "/var/log/whalebone"
+          name: var-log-whalebone
+
+
+
+
+
       volumes:
       - name: cache
         emptyDir:
@@ -275,29 +303,6 @@ spec:
       #           - "yes"
       # restartPolicy: Always
 
-    # blockingpage
-      - name: blockingpage
-        env:
-        - name: GRPC_GATEWAY_ENDPOINT
-          value: '127.0.0.1:8081'
-        - name: GRPC_INSECURE_ENDPOINT
-          value: '127.0.1.1:8091'
-        - name: GRPC_CLIENT_TYPE
-          value: unix
-        - name: GRPC_CLIENT_SOCKET
-          value: /var/whalebone/kresman.sock
-        - name: WEB_PORT
-          value: '80'
-        - name: WEB_PORT_SECURE
-          value: '443'
-        - name: REDIRECT_TO
-          value: http
-        - name: LMDB_VERSION
-          value: v5
-        image: {{ .Values.blockingpage.image }}:{{ .Values.blockingpage.tag }}
-        volumeMounts:
-        - mountPath: "/var/log/whalebone"
-          name: var-log-whalebone
 
 
 status: {}
