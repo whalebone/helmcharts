@@ -38,7 +38,7 @@ consumer:
   image: "harbor.whalebone.io/resolver/k2tide"
   tag: "0.5.0"
 
-blocking-page:
+blockingpage:
   image: "harbor.whalebone.io/resolver/k2web"
   tag: "1.2.12"
 

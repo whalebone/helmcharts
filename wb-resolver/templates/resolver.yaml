@@ -275,8 +275,8 @@ spec:
       #           - "yes"
       # restartPolicy: Always
 
-    # blocking-page
-      - name: blocking-page
+    # blockingpage
+      - name: blockingpage
         env:
         - name: GRPC_GATEWAY_ENDPOINT
           value: '127.0.0.1:8081'
@@ -294,7 +294,7 @@ spec:
           value: http
         - name: LMDB_VERSION
           value: v5
-        image: {{ .Values.blocking-page.image }}:{{ .Values.blocking-page.tag }}
+        image: {{ .Values.blockingpage.image }}:{{ .Values.blockingpage.tag }}
         volumeMounts:
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone

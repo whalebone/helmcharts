@@ -2,10 +2,21 @@ apiVersion: v1
 entries:
   wb-resolver:
   - apiVersion: v2
-    appVersion: 0.1.5
-    created: "2023-06-05T09:33:39.248564554+02:00"
+    appVersion: 0.1.6
+    created: "2023-06-05T09:46:43.271756693+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
-    digest: 7f2fa0e807b7f1862eaf6b22a4547333695a28588a073a5ee8fb5bc76ea58fbd
+    digest: 92fe7954a593071492e0a4a99296fb37320f4174fb86b8bb9279c02006ff00cc
+    icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
+    name: wb-resolver
+    type: application
+    urls:
+    - wb-resolver-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 0.1.5
+    created: "2023-06-05T09:46:43.271320453+02:00"
+    description: A intallation of whalebone DNS resolver in Kubernetes
+    digest: eced55ae260bc258095e33f445de28da6df2c63741b3b9415caa45c546c71578
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
     name: wb-resolver
     type: application
@@ -14,7 +25,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 0.1.4
-    created: "2023-06-05T09:33:39.248133357+02:00"
+    created: "2023-06-05T09:46:43.270888565+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
     digest: a1ba2ab0b291a736c844b4acfbbb02468029ed985a9168fe46588417fbd8300e
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -25,7 +36,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 0.1.3
-    created: "2023-06-05T09:33:39.247720194+02:00"
+    created: "2023-06-05T09:46:43.270475395+02:00"
     description: A intallation of whalebone DNS resolver in Kubernetes
     digest: 5727b94418736e5fc404ecaa69556161d9371d420d8d01eb578c973a46353eee
     icon: https://uploads-ssl.webflow.com/611cb9fbdf6b497bfbef4382/611cb9fbdf6b4981adef44ae_WB_logo.svg
@@ -34,4 +45,4 @@ entries:
     urls:
     - wb-resolver-0.1.3.tgz
     version: 0.1.3
-generated: "2023-06-05T09:33:39.247090511+02:00"
+generated: "2023-06-05T09:46:43.269900649+02:00"
