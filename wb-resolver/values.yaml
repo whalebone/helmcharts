@@ -27,7 +27,7 @@ logrotate:
   tag: "1.2"
 
 dnstag:
-  image: "harbor.whalebone.io/resolver/passivedns"
+  image: "harbor.whalebone.io/resolver/dnstag"
   tag: "1.7.14"
 
 lr_agent:
