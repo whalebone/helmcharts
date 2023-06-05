@@ -33,7 +33,7 @@ spec:
           value: '127.0.0.1'
           # value: 'logcat.resolver'
         - name: SINKIP
-          value: 159.100.251.128
+          value: '159.100.251.128'
         - name: SINKIPV6
           value: '::1'
         - name: SINKTTL
@@ -159,7 +159,7 @@ spec:
       - name: dnstag
         env:
         - name: DNSTAG_LRU_CACHE_SIZE
-          value: 2000000
+          value: '2000000'
         image: {{ .Values.dnstag.image }}:{{ .Values.dnstag.tag }}
         volumeMounts:
         - mountPath: "/var/log/whalebone"
@@ -194,7 +194,7 @@ spec:
         - name: LMDB_VERSION
           value: v5
         - name: HTTP_PORT
-          value: 8888
+          value: '8888'
         image: {{ .Values.consumer.image }}:{{ .Values.consumer.tag }}
 
       # lr-agent
@@ -226,7 +226,7 @@ spec:
         - name: KRESMAN_LISTENER
           value: 'http://localhost:8080'
         - name: UPGRADE_MEMORY_THRESHOLD
-          value: 0.8
+          value: '0.8'
         image: {{ .Values.lr_agent.image }}:{{ .Values.lr_agent.tag }}
         volumeMounts:
         - mountPath: "/etc/whalebone/sysinfo/"
@@ -287,9 +287,9 @@ spec:
         - name: GRPC_CLIENT_SOCKET
           value: /var/whalebone/kresman.sock
         - name: WEB_PORT
-          value: 80
+          value: '80'
         - name: WEB_PORT_SECURE
-          value: 443
+          value: '443'
         - name: REDIRECT_TO
           value: http
         - name: LMDB_VERSION
@@ -298,37 +298,6 @@ spec:
         volumeMounts:
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
-
-
-
-    blocking-page:
-        image: 'harbor.whalebone.io/resolver/k2web:1.2.12'
-        labels:
-            blocking-page: 1.2.12
-        environment:
-            GRPC_GATEWAY_ENDPOINT: '127.0.0.1:8081'
-            GRPC_INSECURE_ENDPOINT: '127.0.1.1:8091'
-            GRPC_CLIENT_TYPE: unix
-            GRPC_CLIENT_SOCKET: /var/whalebone/kresman.sock
-            WEB_PORT: 80
-            WEB_PORT_SECURE: 443
-            REDIRECT_TO: http
-            LMDB_VERSION: v5
-        volumes:
-            - '/var/whalebone/:/var/whalebone/'
-        network_mode: host
-        mem_limit: 2g
-        memswap_limit: 2g
-        mem_swappiness: 0
-        restart: always
-        logging:
-            driver: json-file
-            options:
-                max-size: 100m
-                max-file: '1'
-
-
-
 
 
 status: {}
