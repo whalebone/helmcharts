@@ -4,35 +4,35 @@ replicacount: 1
 
 resolver:
   image: "harbor.whalebone.io/resolver/kres"
-  tag: "5.6.0-661"
+  tag: "4.1.1-knotresolver6.0.15"
 
 logstream:
   image: "harbor.whalebone.io/resolver/logstream"
-  tag: "7.13.2-4"
+  tag: "7.19.0-filebeat7.17.18"
 
 kresman:
   image: "harbor.whalebone.io/resolver/k2man"
-  tag: "1.3.24"
+  tag: "2.0.2"
 
 logcat:
   image: "harbor.whalebone.io/resolver/logcat"
-  tag: "7.13.2"
+  tag: "8.0.1"
 
 logcat_content:
   image: "harbor.whalebone.io/resolver/logcat"
-  tag: "7.13.2"
+  tag: "8.0.1"
 
 logrotate: 
   image: "harbor.whalebone.io/resolver/logrotate"
-  tag: "1.2"
+  tag: "1.3.0"
 
 dnstag:
   image: "harbor.whalebone.io/resolver/dnstag"
-  tag: "1.7.14"
+  tag: "1.10.1"
 
 lr_agent:
   image: "harbor.whalebone.io/resolver/agent"
-  tag: "1.5.11"
+  tag: "4.0.2"
 
 consumer:
   image: "harbor.whalebone.io/resolver/k2tide"
@@ -40,7 +40,7 @@ consumer:
 
 blockingpage:
   image: "harbor.whalebone.io/resolver/k2web"
-  tag: "1.2.12"
+  tag: "0.8.0"
 
 
 
