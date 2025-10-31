@@ -21,17 +21,14 @@ spec:
         app: wb-resolver
     spec:
       containers:
-      # resolver
       - name: resolver
         env:
         - name: LMDB_ROOT
-          value: /var/whalebone/lmdb
+          value: '/var/whalebone/lmdb6'
         - name: LOG_CONTENT
           value: '127.0.0.1'
-          # value: 'logcat.resolver:4000'
         - name: LOG_THREAT
           value: '127.0.0.1'
-          # value: 'logcat.resolver'
         - name: SINKIP
           value: '159.100.251.128'
         - name: SINKIPV6
@@ -40,26 +37,26 @@ spec:
           value: '1'
         - name: CACHE_SIZE
           value: '100'
-###
         - name: LMDB_VERSION
-          value: v5
+          value: 'v6'
+        - name: MANAGEMENT_SOCKET_DIR
+          value: '099cf76eacbc4ebc8bb94b94a57d2517'
         image: {{ .Values.resolver.image }}:{{ .Values.resolver.tag }}
         volumeMounts:
         - mountPath: "/var/lib/kres/cache"
           name: cache
-        - mountPath: "/etc/kres/"
+        - mountPath: "/etc/knot-resolver-tmpl/"
           name: kresconf
+        - mountPath: "/run/knot-resolver/099cf76eacbc4ebc8bb94b94a57d2517/"
+          name: kres-socket-dir
         - mountPath: "/var/whalebone"
           name: var-whalebone
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
-        - mountPath: "/tty/control"
-          name: var-lib-kres-tty
-        # - mountPath: "/etc/kres"
-        #   name: etc-whalebone-kres
+        - mountPath: "/var/whalebone/dnstap/"
+          name: dnstag-socket-dir
         ports:
         - containerPort: 53
-     # kresman     
       - name: kresman
         env:
         - name: CA_CRT_BASE64
@@ -68,58 +65,62 @@ spec:
           value: {{ .Values.certificates.client_crt_base64 }}
         - name: CLIENT_KEY_BASE64
           value: {{ .Values.certificates.client_key_base64 }} 
-        - name:  RESOLVERAPI_URL
-          value: https://resolverapi.{{ .Values.deployment_id }}whalebone.io:443/sinkit/rest/protostream/resolvercache
+        - name:  CLOUD_DOWNLOADER_URL
+          value: 'https://resolverapi.{{ .Values.deployment_id }}whalebone.io:443/sinkit/rest/protostream/resolvercache'
         - name:  GRPC_INSECURE_ENDPOINT
           value: '127.0.0.1:8080'
         - name:  GRPC_SERVER_TYPE
-          value: unix
+          value: 'tcp'
         - name:  GRPC_SERVER_SOCKET
-          value: /var/whalebone/kresman.sock
+          value: '127.0.0.1:8777'
         - name:  LMDB_VERSION
-          value: v5
+          value: 'v6'
+        - name: LMDB_ROOT_DIR
+          value: '/var/whalebone/lmdb6'
+        - name: LMDB_MAP_SIZE_DOMAINS
+          value: '3000000000'
+        - name: LMDB_MAP_SIZE_RADIUS
+          value: '100000000'
+        - name: LMDB_MAP_SIZE_DEFAULT
+          value: '100000000'
+        - name: LMDB_READERS
+          value: '520'
         - name:  SINKHOLE_ENABLED
-          value: "false"
-
-
+          value: 'false'
         image: {{ .Values.kresman.image }}:{{ .Values.kresman.tag }}
         volumeMounts:
         - mountPath: "/var/whalebone"
           name: var-whalebone
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
-     
-       # logcat
       - name: logcat
         env:
         - name: FILENAME
-          value: whalebone.log
+          value: 'whalebone.log'
         - name: HOST
           value: '127.0.0.1:4000'
         - name: PATH_OUT
-          value: /var/log/whalebone/
+          value: '/var/log/whalebone/'
         image: {{ .Values.logcat.image }}:{{ .Values.logcat.tag }}
         volumeMounts:
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
         ports:
         - containerPort: 4000
-     # logcat-content   
       - name: logcat-content
         env:
         - name: FILENAME
-          value: content.log
+          value: 'content.log'
         - name: HOST
           value: '127.0.0.1:4001'
         - name: PATH_OUT
-          value: /var/log/whalebone/
+          value: '/var/log/whalebone/'
         image: {{ .Values.logcat_content.image }}:{{ .Values.logcat_content.tag }}
         volumeMounts:
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
         ports:
         - containerPort: 4001
-     # logstream   
       - name: logstream
         env:
         - name: CA_CRT_BASE64
@@ -134,12 +135,10 @@ spec:
         volumeMounts:
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
-
-    # logrotate
       - name: logrotate
         env:
         - name: LOGROTATE_COMPRESSION
-          value: compress
+          value: 'compress'
         - name: LOGROTATE_COPIES
           value: '5'
         - name: LOGROTATE_CRONSCHEDULE
@@ -154,8 +153,6 @@ spec:
         volumeMounts:
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
- 
-         # dnstag
       - name: dnstag
         env:
         - name: DNSTAG_LRU_CACHE_SIZE
@@ -165,18 +162,7 @@ spec:
         - mountPath: "/var/log/whalebone"
           name: var-log-whalebone
         - mountPath: "/var/whalebone/dnstap"
-          name: var-whalebone-dnstap
-        - mountPath: "/var/whalebone"
-          name: var-whalebone
-        - mountPath: "/var/whalebone/dnstag/db"
-          name: var-whalebone-db
-        - mountPath: "/var/whalebone/lmdb"
-          name: var-whalebone-lmdb
-        # command: ['/go/bin/cmd', '-b', '-u=/var/whalebone/dnstap/dnstap.sock', '-w', '/var/log/whalebone/passivedns.log']
-
-
- 
-      # consumer
+          name: dnstag-socket-dir
       - name: consumer
         env:
         - name: CA_CRT_BASE64
@@ -184,20 +170,18 @@ spec:
         - name: CLIENT_CRT_BASE64
           value: {{ .Values.certificates.client_crt_base64 }}
         - name: CLIENT_KEY_BASE64
-          value: {{ .Values.certificates.client_key_base64 }}       
+          value: {{ .Values.certificates.client_key_base64 }}
         - name: KAFKA_BROKER
-          value: stream.{{ .Values.deployment_id }}whalebone.io
+          value: 'stream.{{ .Values.deployment_id }}whalebone.io'
         - name: GRPC_CLIENT_TYPE
-          value: unix
+          value: 'ipv4'
         - name: GRPC_CLIENT_SOCKET
-          value: /var/whalebone/kresman.sock
+          value: '127.0.0.1:8777'
         - name: LMDB_VERSION
-          value: v5
+          value: 'v6'
         - name: HTTP_PORT
           value: '8888'
         image: {{ .Values.consumer.image }}:{{ .Values.consumer.tag }}
-
-      # lr-agent
       - name: lr-agent
         env:
         - name: CA_CRT_BASE64
@@ -213,30 +197,35 @@ spec:
         - name: PROXY_ADDRESS
           value: 'wss://agentapi.{{ .Values.deployment_id }}whalebone.io:443/wsproxy/ws'
         - name: RESOLVER_TRANSLATION_CHECK_METHOD
-          value: trace
+          value: 'trace'
         - name: UPGRADE_SLEEP
           value: '30'
         - name: WEBSOCKET_LOGGING
           value: '10'
         - name: DEPLOYMENT_TYPE
           value: 'kubernetes'
-## new ENCS
         - name: KRESMAN_API_FORMAT
-          value: v2
+          value: 'v3'
         - name: KRESMAN_LISTENER
           value: 'http://localhost:8080'
         - name: UPGRADE_MEMORY_THRESHOLD
           value: '0.8'
+        - name: DO_NOT_VERIFY_SIGNATURE
+          value: 'true'
         image: {{ .Values.lr_agent.image }}:{{ .Values.lr_agent.tag }}
         volumeMounts:
+        - mountPath: "/etc/whalebone/requests"
+          name: agent-requests
+        - mountPath: "/etc/whalebone/logs"
+          name: agent-logs
+        - mountPath: "/opt/agent/cache"
+          name: agent-cache
         - mountPath: "/etc/whalebone/sysinfo/"
           name: var-log-whalebone
-        - mountPath: "/etc/whalebone/tty/"
-          name: var-lib-kres-tty
+        - mountPath: "/etc/whalebone/ttyv6"
+          name: var-lib-kres-tty6
         - mountPath: "/etc/whalebone/etc"
           name: etc-whalebone
-
-    # blockingpage
       - name: blockingpage
         env:
         - name: GRPC_GATEWAY_ENDPOINT
@@ -244,26 +233,23 @@ spec:
         - name: GRPC_INSECURE_ENDPOINT
           value: '127.0.1.1:8091'
         - name: GRPC_CLIENT_TYPE
-          value: unix
+          value: 'tcp'
         - name: GRPC_CLIENT_SOCKET
-          value: /var/whalebone/kresman.sock
+          value: '127.0.0.1:8777'
         - name: WEB_PORT
           value: '80'
         - name: WEB_PORT_SECURE
           value: '443'
         - name: REDIRECT_TO
-          value: http
+          value: 'http'
         - name: LMDB_VERSION
-          value: v5
+          value: 'v6'
+        - name: LMDB_ROOT_DIR
+          value: '/var/whalebone/lmdb6'
         image: {{ .Values.blockingpage.image }}:{{ .Values.blockingpage.tag }}
         volumeMounts:
         - mountPath: "/var/whalebone"
           name: var-whalebone
-
-
-
-
-
       volumes:
       - name: cache
         emptyDir:
@@ -275,18 +261,22 @@ spec:
           name: kresconf
       - name: var-whalebone
         emptyDir: {}
+      - name: kres-socket-dir
+        emptyDir: {}
       - name: var-log-whalebone
         emptyDir: {}
-      - name: var-lib-kres-tty
+      - name: var-lib-kres-tty6
         emptyDir: {}
       - name: etc-whalebone
         emptyDir: {}
-      - name: var-whalebone-dnstap
+      - name: dnstag-socket-dir
         emptyDir: {}
-      - name: var-whalebone-db
+      - name: agent-requests
         emptyDir: {}
-      - name: var-whalebone-lmdb
-
+      - name: agent-logs
+        emptyDir: {}
+      - name: agent-cache
+        emptyDir: {}
       # - name: etc-whalebone-kres
       #   emptyDir: {}
       # imagePullSecrets: 
